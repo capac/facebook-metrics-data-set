@@ -107,3 +107,19 @@ def feature_importances_plot_RFR(model, col, filename):
 feature_importances_plot_RFR(RandomForestRegressor(), performance_columns[-1], 'feature_importances_1.png')
 
 feature_importances_plot_RFR(RandomForestRegressor(), performance_columns[3], 'feature_importances_2.png')
+
+fig, axes = plt.subplots(figsize=(10, 8))
+sns.barplot(data=fb_df, x='Type', y=performance_columns[-1], palette='viridis', edgecolor='k', ax=axes)
+plt.tight_layout()
+axes.set_xticklabels(['Photo', 'Status', 'Link', 'Video'])
+# ['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4]
+plt.grid(True, linestyle=':')
+plt.savefig('plots/problem_2/plot_type_1.png', dpi=288, bbox_inches='tight')
+
+fig, axes = plt.subplots(figsize=(10, 8))
+sns.barplot(data=fb_df, x='Type', y=performance_columns[3], palette='viridis', edgecolor='k', ax=axes)
+plt.tight_layout()
+axes.set_xticklabels(['Photo', 'Status', 'Link', 'Video'])
+# ['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4]
+plt.grid(True, linestyle=':')
+plt.savefig('plots/problem_2/plot_type_2.png', dpi=288, bbox_inches='tight')

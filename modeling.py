@@ -46,28 +46,25 @@ fb_df_prepared = pd.concat([fb_df_num, fb_df[['Type', 'Category']]], axis=1)
 
 # data modeling
 def cv_performance_model(model):
-    cross_val_scores = []
+    cross_val_scores = list()
     for col in performance_columns:
         X = fb_df_prepared
         y = fb_df[col].values
         scores = cross_val_score(model, X, y, scoring='neg_mean_squared_error', cv=5)
         rmse_scores = np.sqrt(-scores)
         rmse_mean = rmse_scores.mean()
-#         rmse_std = rmse_scores.std()
-#         y_pred = model.predict(X_test)
-#         rmse_score = np.sqrt(mean_squared_error(y_test, y_pred))
-#         results.append(round(rmse_score, 5))
-#         cross_val_scores.append((round(rmse_mean, 3), round(rmse_std, 3)))
-        cross_val_scores.append(round(rmse_mean, 3))
+        rmse_std = rmse_scores.std()
+        cross_val_scores.append({'rmse': round(rmse_mean, 3), 'std': round(rmse_std, 3)})
     return cross_val_scores
 
 
 def performance_model_table(model):
     t0 = time()
-    reg_model = cv_performance_model(model)
-    reg_df = pd.Series(reg_model, index=performance_columns)
-    reg_df.sort_values(ascending=True, inplace=True)
-    reg_df = pd.DataFrame({'Performance metric': reg_df.index, 'RMSE': reg_df.values})
+    cross_val_scores = cv_performance_model(model)
+    reg_df = pd.DataFrame(cross_val_scores, index=performance_columns)
+    reg_df.sort_values(by='rmse', ascending=True, inplace=True)
+    reg_df.reset_index(inplace=True)
+    reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE', 'std': 'Standard deviation'}, inplace=True)
     print(f'Time elapsed for {name}: {round(time() - t0, 2)} s.')
     return reg_df
 

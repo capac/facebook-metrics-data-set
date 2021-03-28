@@ -13,33 +13,38 @@ from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
 
+pd.set_option('display.max_colwidth', None)
+
 home = os.environ['HOME']
 home_dir = Path(home)
 work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-metrics-data-set'
 data_file = work_dir / 'data/dataset_Facebook.csv'
 
+# data preparation
 fb_df = pd.read_csv(data_file, sep=';')
 
+# column distinction
 input_columns = list(fb_df.columns[0:7])
 performance_columns = list(fb_df.columns[7:15])
 
+# column data type
 numeric_columns = list(set(fb_df.columns[0:7]) - set(fb_df.columns[1:3]))
 category_columns = list(fb_df.columns[1:3])
 
+# transformation of category strings to integers
 fb_df['Type'] = fb_df['Type'].replace(['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4])
 
+# substitution of NAs with median and standardization
 num_pipeline = Pipeline([
     ('imputer', SimpleImputer(strategy='median')),
     ('std_scaler', StandardScaler())
 ])
-
 fb_df_num_tr = num_pipeline.fit_transform(fb_df[numeric_columns])
 fb_df_num = pd.DataFrame(fb_df_num_tr, columns=numeric_columns)
-
 fb_df_prepared = pd.concat([fb_df_num, fb_df[['Type', 'Category']]], axis=1)
 
 
-# modeling
+# data modeling
 def cv_performance_model(model):
     cross_val_scores = []
     for col in performance_columns:
@@ -57,28 +62,26 @@ def cv_performance_model(model):
     return cross_val_scores
 
 
-t0 = time()
-lin_svr = cv_performance_model(LinearRegression())
-lin_svr_df = pd.Series(lin_svr, index=performance_columns)
-print(f'Time elapsed: {round(time() - t0, 2)} s.')
-lin_svr_df.sort_values(ascending=True, inplace=True)
-lin_svr_df = pd.DataFrame({'Performance metric': lin_svr_df.index, 'RMSE': lin_svr_df.values})
-print(lin_svr_df)
+def performance_model_table(model):
+    t0 = time()
+    reg_model = cv_performance_model(model)
+    reg_df = pd.Series(reg_model, index=performance_columns)
+    reg_df.sort_values(ascending=True, inplace=True)
+    reg_df = pd.DataFrame({'Performance metric': reg_df.index, 'RMSE': reg_df.values})
+    print(f'Time elapsed for {name}: {round(time() - t0, 2)} s.')
+    return reg_df
 
-t0 = time()
-res_svr = cv_performance_model(SVR())
-# res_svr.sort()
-# res_svr_str = [str(mean)+' +/- '+str(std) for mean, std in res_svr]
-print(f'Time elapsed: {round(time() - t0, 2)} s.')
-res_svr_df = pd.Series(res_svr, index=performance_columns)
-res_svr_df.sort_values(ascending=True, inplace=True)
-res_svr_df = pd.DataFrame({'Performance metric': res_svr_df.index, 'RMSE': res_svr_df.values})
-print(res_svr_df)
 
-t0 = time()
-rfr = cv_performance_model(RandomForestRegressor(random_state=42))
-rfr_sr = pd.Series(rfr, index=performance_columns)
-print(f'Time elapsed: {round(time() - t0, 2)} s.')
-rfr_sr.sort_values(ascending=True, inplace=True)
-rfr_df = pd.DataFrame({'Performance metric': rfr_sr.index, 'RMSE': rfr_sr.values})
-print(rfr_df)
+model_list = {'Linear Regression': LinearRegression(),
+              'Support Vector Machine Regressor': SVR(),
+              'Random Forest Regressor': RandomForestRegressor(random_state=42),
+              }
+
+
+# model calculation and saving output to file
+with open(work_dir / 'stats_output.txt', 'w') as f:
+    for name, model in model_list.items():
+        results = performance_model_table(model)
+        f.writelines(f'Results for {name}: \n{(results)}\n\n')
+    f.writelines('\n')
+    print('Done!')

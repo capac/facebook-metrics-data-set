@@ -42,7 +42,7 @@ def feature_importances_plot(model, col, filename):
     y = fb_df[col].values
     model.fit(X, y)
     sorted_features_df = pd.Series(model.coef_[0], index=X.columns)
-    sorted_features_df.sort_values(inplace=True)
+    sorted_features_df.sort_values(inplace=True, ascending=False)
     sorted_features_df = sorted_features_df.reset_index()
     sorted_features_df.rename(columns={'index': 'feature_importance', 0: 'feature_importance_value'}, inplace=True)
     _, axes = plt.subplots(figsize=(14, 8))
@@ -50,8 +50,8 @@ def feature_importances_plot(model, col, filename):
                 y=sorted_features_df['feature_importance_value'],
                 palette='viridis', edgecolor='k', ax=axes)
     axes.set_title('Feature importances', fontsize=18)
-    axes.set_xlabel('')
-    axes.set_ylabel('')
+    axes.set_xlabel('Type')
+    axes.set_ylabel('Value')
     plt.tight_layout()
     plt.grid(True, linestyle=':')
     plt.savefig('plots/'+filename, dpi=288, bbox_inches='tight')

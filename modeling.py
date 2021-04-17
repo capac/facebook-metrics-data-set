@@ -7,6 +7,7 @@ import numpy as np
 from time import time
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
+from helper_functions.remove_outliers import OutlierExtractor
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
 from sklearn.svm import SVR
@@ -50,7 +51,9 @@ def cv_performance_model(model):
     for col in performance_columns:
         X = fb_df_prepared
         y = fb_df[col].values
-        scores = cross_val_score(model, X, y, scoring='neg_mean_squared_error', cv=5)
+        out_ex = OutlierExtractor(neg_conf_val=-1)
+        X_oe, y_oe = out_ex.transform(X, y)
+        scores = cross_val_score(model, X_oe, y_oe, scoring='neg_mean_squared_error', cv=5)
         rmse_scores = np.sqrt(-scores)
         rmse_mean = rmse_scores.mean()
         rmse_std = rmse_scores.std()
@@ -70,13 +73,13 @@ def performance_model_table(model):
 
 
 model_list = {'Linear Regression': LinearRegression(),
-              'Support Vector Machine Regressor': SVR(),
+              'Support Vector Machine Regressor': SVR(C=1e3),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
               }
 
 
 # model calculation and saving output to file
-with open(work_dir / 'stats_output.txt', 'w') as f:
+with open(work_dir / 'stats_output_no_outliers.txt', 'w') as f:
     for name, model in model_list.items():
         results = performance_model_table(model)
         f.writelines(f'Results for {name}: \n{(results)}\n\n')

@@ -77,7 +77,7 @@ def performance_model_table(model):
 
 
 model_list = {'Linear Regression': LinearRegression(),
-              'Support Vector Machine Regressor': SVR(C=8e2),
+              'Support Vector Machine Regressor': SVR(kernel='linear', C=1e3),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
               }
 

@@ -53,7 +53,7 @@ class RemoveMetricOutliers(BaseEstimator, TransformerMixin):
 
         Keyword Args:
             sigma (float): The threshold for excluding samples such that the absolute
-            value of the sample is less than the threshold sigma.
+            value of the sample is less than the sigma threshold.
 
         Returns:
             ndarray: subsampled data
@@ -66,6 +66,13 @@ class RemoveMetricOutliers(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X, y):
+        '''
+        Uses StandardScaler to standardize y label values and retain only
+        those that are within the sigms value threshold
+
+        Returns:
+            ndarray: subsampled data
+        '''
         X = np.asarray(X)
         y = np.asarray(y).reshape(-1, 1)
         ss = StandardScaler(**self.kwargs)

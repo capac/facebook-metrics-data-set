@@ -68,7 +68,7 @@ class RemoveMetricOutliers(BaseEstimator, TransformerMixin):
     def transform(self, X, y):
         '''
         Uses StandardScaler to standardize y label values and retain only
-        those that are within the sigms value threshold
+        those that are within the sigma value threshold.
 
         Returns:
             ndarray: subsampled data

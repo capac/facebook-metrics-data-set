@@ -3,13 +3,13 @@
 import os
 from pathlib import Path
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
-from sklearn.ensemble import RandomForestRegressor
+from helper_functions.remove_outliers import RemoveMetricOutliers
+from sklearn.linear_model import LinearRegression
 
 home = os.environ['HOME']
 home_dir = Path(home)
@@ -41,15 +41,18 @@ def feature_importances_plot(model, col, filename):
     sns.set_context("talk")
     X = fb_df_prepared
     y = fb_df[col].values
-    model.fit(X, y)
-    std_err = np.std([tree.feature_importances_ for tree in model.estimators_], axis=0)
-    sorted_features_df = pd.DataFrame({'feature_importance_value': model.feature_importances_,
-                                      'std_err': std_err},
+    rmo = RemoveMetricOutliers(sigma=2.0)
+    X_rmo, y_rmo = rmo.transform(X, y)
+    y_rmo = y_rmo.ravel()
+    model.fit(X_rmo, y_rmo)
+    # std_err = np.std([tree.feature_importances_ for tree in model.estimators_], axis=0)
+    sorted_features_df = pd.DataFrame({'feature_importance_value': model.coef_},
                                       index=X.columns).sort_values(by='feature_importance_value',
                                                                    ascending=False)
     _, axes = plt.subplots(figsize=(14, 8))
-    sns.barplot(data=sorted_features_df, x=sorted_features_df.index, y=sorted_features_df['feature_importance_value'],
-                palette='viridis', edgecolor='k', ax=axes, yerr=sorted_features_df['std_err'])
+    sns.barplot(data=sorted_features_df, x=sorted_features_df.index,
+                y=sorted_features_df['feature_importance_value'], palette='viridis',
+                edgecolor='k', ax=axes)
     axes.set_title('Feature importances', fontsize=18)
     plt.tight_layout()
     plt.grid(True, linestyle=':')
@@ -57,11 +60,11 @@ def feature_importances_plot(model, col, filename):
 
 
 # Feature importance plot, 'Lifetime People who have liked your Page and engaged with your post'
-feature_importances_plot(RandomForestRegressor(),
+feature_importances_plot(LinearRegression(),
                          performance_columns[-1],
                          'feature_importances_1.png')
 # Feature importance plot, 'Lifetime Post Consumers'
-feature_importances_plot(RandomForestRegressor(),
+feature_importances_plot(LinearRegression(),
                          performance_columns[3],
                          'feature_importances_2.png')
 

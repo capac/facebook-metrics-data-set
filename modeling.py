@@ -29,8 +29,10 @@ input_columns = list(fb_df.columns[0:7])
 performance_columns = list(fb_df.columns[7:15])
 
 # column data type
-numeric_columns = list(set(fb_df.columns[0:7]) - set(fb_df.columns[1:3]))
-category_columns = list(fb_df.columns[1:3])
+numeric_columns = list(set(fb_df.columns[0:6]) - set(fb_df.columns[[1, 2, 6]]))
+category_columns = list(fb_df.columns[[1, 2, 6]])
+print(f'numeric_columns: {numeric_columns}')
+print(f'category_columns: {category_columns}')
 
 # transformation of category strings to integers
 fb_df['Type'] = fb_df['Type'].replace(['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4])

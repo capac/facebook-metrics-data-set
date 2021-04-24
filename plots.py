@@ -9,7 +9,9 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from helper_functions.remove_outliers import RemoveMetricOutliers
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import ElasticNet
+
+pd.set_option('display.max_colwidth', None)
 
 home = os.environ['HOME']
 home_dir = Path(home)
@@ -17,12 +19,18 @@ work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-me
 data_file = work_dir / 'data/dataset_Facebook.csv'
 
 fb_df = pd.read_csv(data_file, sep=';')
+# print(f'fb_df.info(): {fb_df.info()}')
+# print(f'fb_df.nunique(): {fb_df.nunique()}')
+# print(f'fb_df.like.unique(): {fb_df.like.unique()}')
+# print(f'fb_df.share.unique(): {fb_df.share.unique()}')
 
 input_columns = list(fb_df.columns[0:7])
 performance_columns = list(fb_df.columns[7:15])
 
-numeric_columns = list(set(fb_df.columns[0:7]) - set(fb_df.columns[1:3]))
-category_columns = list(fb_df.columns[1:3])
+numeric_columns = list(set(fb_df.columns[0:6]) - set(fb_df.columns[[1, 2, 6]]))
+category_columns = list(fb_df.columns[[1, 2, 6]])
+print(f'numeric_columns: {numeric_columns}')
+print(f'category_columns: {category_columns}')
 
 fb_df['Type'] = fb_df['Type'].replace(['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4])
 
@@ -60,11 +68,11 @@ def feature_importances_plot(model, col, filename):
 
 
 # Feature importance plot, 'Lifetime People who have liked your Page and engaged with your post'
-feature_importances_plot(LinearRegression(),
+feature_importances_plot(ElasticNet(l1_ratio=0.2, alpha=5.0),
                          performance_columns[-1],
                          'feature_importances_1.png')
 # Feature importance plot, 'Lifetime Post Consumers'
-feature_importances_plot(LinearRegression(),
+feature_importances_plot(ElasticNet(l1_ratio=0.2, alpha=5.0),
                          performance_columns[3],
                          'feature_importances_2.png')
 

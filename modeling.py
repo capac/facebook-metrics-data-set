@@ -9,7 +9,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from helper_functions.remove_outliers import RemoveMetricOutliers
 from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
+from sklearn.linear_model import LinearRegression, Ridge, ElasticNet
 from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
@@ -76,10 +76,10 @@ def performance_model_table(model):
     return reg_df
 
 
-model_list = {'Linear Regression': LinearRegression(),
-              'Lasso': Lasso(),
+model_list = {'ElasticNet': ElasticNet(l1_ratio=0.2, alpha=5.0),
+              'Linear Regression': LinearRegression(),
               'Ridge': Ridge(),
-              'ElasticNet': ElasticNet(),
+              # coef_ weights are only available with SVR(kernel='linear')
               'Support Vector Machine Regressor': SVR(kernel='linear', C=1e3),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
               }

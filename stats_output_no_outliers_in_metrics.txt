@@ -20,17 +20,6 @@ Results for Ridge:
 6         Lifetime Post Impressions by people who have liked your Page  15807.826            3484.861
 7                                      Lifetime Post Total Impressions  25516.864            1398.413
 
-Results for Linear Regression: 
-                                                    Performance metric       RMSE  Standard deviation
-0  Lifetime People who have liked your Page and engaged with your post    334.107              33.096
-1                                              Lifetime Post Consumers    441.260              53.847
-2                                               Lifetime Engaged Users    514.404              50.685
-3                                           Lifetime Post Consumptions    791.871             106.703
-4                     Lifetime Post reach by people who like your Page   4093.771             430.715
-5                                            Lifetime Post Total Reach  11830.734            1059.824
-6         Lifetime Post Impressions by people who have liked your Page  15870.722            3421.915
-7                                      Lifetime Post Total Impressions  25551.571            1391.624
-
 Results for ElasticNet: 
                                                     Performance metric       RMSE  Standard deviation
 0  Lifetime People who have liked your Page and engaged with your post    354.571              51.706

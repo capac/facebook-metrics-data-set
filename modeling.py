@@ -9,7 +9,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from helper_functions.remove_outliers import RemoveMetricOutliers
 from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LinearRegression, Ridge, ElasticNet
+from sklearn.linear_model import Ridge, ElasticNet
 from sklearn.svm import SVR
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
@@ -33,9 +33,9 @@ performance_columns = list(fb_df.columns[7:15])
 # column data type
 numeric_columns = list(set(fb_df.columns[0:6]) - set(fb_df.columns[[1, 2]]))
 category_columns = list(fb_df.columns[[1, 2, 6]])
-print(f'input_columns: {input_columns}')
-print(f'numeric_columns: {numeric_columns}')
-print(f'category_columns: {category_columns}')
+# print(f'input_columns: {input_columns}')
+# print(f'numeric_columns: {numeric_columns}')
+# print(f'category_columns: {category_columns}')
 
 # transformation of category strings to integers
 fb_df['Type'] = fb_df['Type'].replace(['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4])
@@ -51,7 +51,7 @@ full_pipeline = ColumnTransformer([
     ('cat', OneHotEncoder(), category_columns),
 ])
 
-fb_df_num_tr = full_pipeline.fit_transform(fb_df)
+fb_df_num_tr = full_pipeline.fit_transform(fb_df[input_columns])
 
 
 # data modeling
@@ -85,7 +85,6 @@ def performance_model_table(model):
 # coef_ weights are only available with SVR(kernel='linear')
 model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=1e3),
               'Ridge': Ridge(),
-              'Linear Regression': LinearRegression(),
               'ElasticNet': ElasticNet(l1_ratio=0.2, alpha=5.0),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
               }

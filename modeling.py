@@ -11,6 +11,8 @@ from helper_functions.remove_outliers import RemoveMetricOutliers
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression, Ridge, ElasticNet
 from sklearn.svm import SVR
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
 
@@ -29,8 +31,9 @@ input_columns = list(fb_df.columns[0:7])
 performance_columns = list(fb_df.columns[7:15])
 
 # column data type
-numeric_columns = list(set(fb_df.columns[0:6]) - set(fb_df.columns[[1, 2, 6]]))
+numeric_columns = list(set(fb_df.columns[0:6]) - set(fb_df.columns[[1, 2]]))
 category_columns = list(fb_df.columns[[1, 2, 6]])
+print(f'input_columns: {input_columns}')
 print(f'numeric_columns: {numeric_columns}')
 print(f'category_columns: {category_columns}')
 
@@ -42,19 +45,20 @@ num_pipeline = Pipeline([
     ('imputer', SimpleImputer(strategy='median')),
     ('std_scaler', StandardScaler())
 ])
-fb_df_num_tr = num_pipeline.fit_transform(fb_df[numeric_columns])
-fb_df_num = pd.DataFrame(fb_df_num_tr, columns=numeric_columns)
-fb_df_prepared = pd.concat([fb_df_num, fb_df[['Type', 'Category']]], axis=1)
 
-# substitution of NAs with median and standardization in labels
-fb_df_num_tr = num_pipeline.fit_transform(fb_df[numeric_columns])
+full_pipeline = ColumnTransformer([
+    ('num', num_pipeline, numeric_columns),
+    ('cat', OneHotEncoder(), category_columns),
+])
+
+fb_df_num_tr = full_pipeline.fit_transform(fb_df)
 
 
 # data modeling
 def cv_performance_model(model):
     cross_val_scores = list()
     for col in performance_columns:
-        X = fb_df_prepared
+        X = fb_df_num_tr
         y = fb_df[col].values
         rmo = RemoveMetricOutliers(sigma=2.0)
         X_rmo, y_rmo = rmo.transform(X, y)
@@ -78,11 +82,11 @@ def performance_model_table(model):
     return reg_df
 
 
-model_list = {'ElasticNet': ElasticNet(l1_ratio=0.2, alpha=5.0),
-              'Linear Regression': LinearRegression(),
+# coef_ weights are only available with SVR(kernel='linear')
+model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=1e3),
               'Ridge': Ridge(),
-              # coef_ weights are only available with SVR(kernel='linear')
-              'Support Vector Machine Regressor': SVR(kernel='linear', C=1e3),
+              'Linear Regression': LinearRegression(),
+              'ElasticNet': ElasticNet(l1_ratio=0.2, alpha=5.0),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
               }
 

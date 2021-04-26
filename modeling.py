@@ -27,15 +27,25 @@ data_file = work_dir / 'data/dataset_Facebook.csv'
 fb_df = pd.read_csv(data_file, sep=';')
 
 # column distinction
+selected_columns = list(fb_df.columns[0:15])
+# print(f'selected_columns: {selected_columns}')
 input_columns = list(fb_df.columns[0:7])
+# print(f'input_columns: {input_columns}\n')
 performance_columns = list(fb_df.columns[7:15])
+# print(f'performance_columns: {performance_columns}\n')
+
+# print(f'fb_df.info(): {fb_df.info()}')
+# print(f'fb_df.nunique(): {fb_df.nunique()}')
+# print(f'fb_df.Paid.unique(): {fb_df.Paid.unique()}')
+# print(f'fb_df.share.unique(): {fb_df.share.unique()}')
 
 # column data type
 numeric_columns = list(set(fb_df.columns[0:6]) - set(fb_df.columns[[1, 2]]))
+# print(f'numeric_columns: {numeric_columns}\n')
 category_columns = list(fb_df.columns[[1, 2, 6]])
-# print(f'input_columns: {input_columns}')
-# print(f'numeric_columns: {numeric_columns}')
-# print(f'category_columns: {category_columns}')
+# print(f'category_columns: {category_columns}\n')
+
+# print(f'fb_df[category_columns].nunique():\n{fb_df[category_columns].nunique()}\n')
 
 # transformation of category strings to integers
 fb_df['Type'] = fb_df['Type'].replace(['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4])
@@ -51,7 +61,15 @@ full_pipeline = ColumnTransformer([
     ('cat', OneHotEncoder(), category_columns),
 ])
 
-fb_df_num_tr = full_pipeline.fit_transform(fb_df[input_columns])
+
+# drop NaNs from data frame
+selected_fb_df = fb_df[selected_columns].copy()
+# print(f'fb_input_df.shape: {selected_fb_df.shape}')
+selected_fb_df.dropna(inplace=True)
+# print(f'fb_input_df.shape: {selected_fb_df.shape}')
+
+fb_df_num_tr = full_pipeline.fit_transform(selected_fb_df)
+# print(f'fb_df_num_tr.shape: {fb_df_num_tr.shape}')
 
 
 # data modeling
@@ -59,7 +77,7 @@ def cv_performance_model(model):
     cross_val_scores = list()
     for col in performance_columns:
         X = fb_df_num_tr
-        y = fb_df[col].values
+        y = selected_fb_df[col].values
         rmo = RemoveMetricOutliers(sigma=2.0)
         X_rmo, y_rmo = rmo.transform(X, y)
         y_rmo = y_rmo.ravel()

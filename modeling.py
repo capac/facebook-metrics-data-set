@@ -6,15 +6,14 @@ import pandas as pd
 import numpy as np
 from time import time
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler
-from helper_functions.remove_outliers import RemoveMetricOutliers
+from sklearn.preprocessing import StandardScaler, OrdinalEncoder, OneHotEncoder
 from sklearn.pipeline import Pipeline
-from sklearn.linear_model import Ridge, ElasticNet
-from sklearn.svm import SVR
-from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.ensemble import RandomForestRegressor
+from helper_functions.remove_outliers import RemoveMetricOutliers
 from sklearn.model_selection import cross_val_score
+from sklearn.svm import SVR
+from sklearn.linear_model import Ridge, ElasticNet
+from sklearn.ensemble import RandomForestRegressor
 
 pd.set_option('display.max_colwidth', None)
 
@@ -28,24 +27,14 @@ fb_df = pd.read_csv(data_file, sep=';')
 
 # column distinction
 selected_columns = list(fb_df.columns[0:15])
-# print(f'selected_columns: {selected_columns}')
 input_columns = list(fb_df.columns[0:7])
-# print(f'input_columns: {input_columns}\n')
 performance_columns = list(fb_df.columns[7:15])
-# print(f'performance_columns: {performance_columns}\n')
 
-# print(f'fb_df.info(): {fb_df.info()}')
-# print(f'fb_df.nunique(): {fb_df.nunique()}')
-# print(f'fb_df.Paid.unique(): {fb_df.Paid.unique()}')
-# print(f'fb_df.share.unique(): {fb_df.share.unique()}')
 
 # column data type
-numeric_columns = list(set(fb_df.columns[0:6]) - set(fb_df.columns[[1, 2]]))
-# print(f'numeric_columns: {numeric_columns}\n')
-category_columns = list(fb_df.columns[[1, 2, 6]])
-# print(f'category_columns: {category_columns}\n')
-
-# print(f'fb_df[category_columns].nunique():\n{fb_df[category_columns].nunique()}\n')
+numeric_cols = [fb_df.columns[0]]
+cat_onehot_cols = list(fb_df.columns[[1, 2, 6]])
+cat_ordenc_cols = list(fb_df.columns[3:6])
 
 # transformation of category strings to integers
 fb_df['Type'] = fb_df['Type'].replace(['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4])
@@ -57,19 +46,17 @@ num_pipeline = Pipeline([
 ])
 
 full_pipeline = ColumnTransformer([
-    ('num', num_pipeline, numeric_columns),
-    ('cat', OneHotEncoder(), category_columns),
+    ('num', num_pipeline, numeric_cols),
+    ('cat_onehot', OneHotEncoder(), cat_onehot_cols),
+    ('cat_labelenc', OrdinalEncoder(), cat_ordenc_cols),
 ])
 
 
 # drop NaNs from data frame
 selected_fb_df = fb_df[selected_columns].copy()
-# print(f'fb_input_df.shape: {selected_fb_df.shape}')
 selected_fb_df.dropna(inplace=True)
-# print(f'fb_input_df.shape: {selected_fb_df.shape}')
 
 fb_df_num_tr = full_pipeline.fit_transform(selected_fb_df)
-# print(f'fb_df_num_tr.shape: {fb_df_num_tr.shape}')
 
 
 # data modeling

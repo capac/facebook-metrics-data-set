@@ -30,7 +30,6 @@ selected_columns = list(fb_df.columns[0:15])
 input_columns = list(fb_df.columns[0:7])
 performance_columns = list(fb_df.columns[7:15])
 
-
 # column data type
 numeric_cols = [fb_df.columns[0]]
 cat_onehot_cols = list(fb_df.columns[[1, 2, 6]])
@@ -51,11 +50,11 @@ full_pipeline = ColumnTransformer([
     ('cat_labelenc', OrdinalEncoder(), cat_ordenc_cols),
 ])
 
-
 # drop NaNs from data frame
 selected_fb_df = fb_df[selected_columns].copy()
 selected_fb_df.dropna(inplace=True)
 
+# application for feature transformation pipeline
 fb_df_num_tr = full_pipeline.fit_transform(selected_fb_df)
 
 

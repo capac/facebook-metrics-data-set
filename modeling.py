@@ -86,8 +86,8 @@ def performance_model_table(model):
 
 
 # coef_ weights are only available with SVR(kernel='linear')
-model_list = {'Ridge': Ridge(fit_intercept=False),
-              'Support Vector Machine Regressor': SVR(kernel='linear', C=1e3),
+model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=8e1),
+              'Ridge': Ridge(fit_intercept=False),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
               'ElasticNet': ElasticNet(l1_ratio=0.7, fit_intercept=False),
               }

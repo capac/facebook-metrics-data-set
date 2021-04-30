@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 from time import time
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, OrdinalEncoder, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from helper_functions.remove_outliers import RemoveMetricOutliers
@@ -27,16 +27,19 @@ fb_df = pd.read_csv(data_file, sep=';')
 
 # column distinction
 selected_columns = list(fb_df.columns[0:15])
-input_columns = list(fb_df.columns[0:7])
-performance_columns = list(fb_df.columns[7:15])
+input_columns = selected_columns[0:7]
+output_columns = selected_columns[7:15]
 
-# column data type
-numeric_cols = [fb_df.columns[0]]
-cat_onehot_cols = list(fb_df.columns[[1, 2, 6]])
-cat_ordenc_cols = list(fb_df.columns[3:6])
+# drop NaNs from data frame
+selected_fb_df = fb_df[selected_columns].copy()
+# drops the one NA from the 'Paid' category column
+selected_fb_df.dropna(inplace=True)
 
-# transformation of category strings to integers
-fb_df['Type'] = fb_df['Type'].replace(['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4])
+# input column data type
+numeric_cols = [input_columns[0]]
+# print(f'numeric_cols: {numeric_cols}')
+cat_onehot_cols = input_columns[1:7]
+# print(f'cat_onehot_cols: {cat_onehot_cols}')
 
 # substitution of NAs with median and standardization in samples
 num_pipeline = Pipeline([
@@ -47,22 +50,18 @@ num_pipeline = Pipeline([
 full_pipeline = ColumnTransformer([
     ('num', num_pipeline, numeric_cols),
     ('cat_onehot', OneHotEncoder(), cat_onehot_cols),
-    ('cat_labelenc', OrdinalEncoder(), cat_ordenc_cols),
 ])
 
-# drop NaNs from data frame
-selected_fb_df = fb_df[selected_columns].copy()
-selected_fb_df.dropna(inplace=True)
-
 # application for feature transformation pipeline
-fb_df_num_tr = full_pipeline.fit_transform(selected_fb_df)
+fb_df_tr = full_pipeline.fit_transform(selected_fb_df)
+# print(f'fb_df_tr.shape: {fb_df_tr.shape}')
 
 
 # data modeling
 def cv_performance_model(model):
     cross_val_scores = list()
-    for col in performance_columns:
-        X = fb_df_num_tr
+    for col in output_columns:
+        X = fb_df_tr
         y = selected_fb_df[col].values
         rmo = RemoveMetricOutliers(sigma=2.0)
         X_rmo, y_rmo = rmo.transform(X, y)
@@ -78,7 +77,7 @@ def cv_performance_model(model):
 def performance_model_table(model):
     t0 = time()
     cross_val_scores = cv_performance_model(model)
-    reg_df = pd.DataFrame(cross_val_scores, index=performance_columns)
+    reg_df = pd.DataFrame(cross_val_scores, index=output_columns)
     reg_df.sort_values(by='rmse', ascending=True, inplace=True)
     reg_df.reset_index(inplace=True)
     reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE', 'std': 'Standard deviation'}, inplace=True)
@@ -87,10 +86,10 @@ def performance_model_table(model):
 
 
 # coef_ weights are only available with SVR(kernel='linear')
-model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=1e3),
-              'Ridge': Ridge(fit_intercept=False),
-              'ElasticNet': ElasticNet(l1_ratio=0.7, fit_intercept=False),
+model_list = {'Ridge': Ridge(fit_intercept=False),
+              'Support Vector Machine Regressor': SVR(kernel='linear', C=1e3),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
+              'ElasticNet': ElasticNet(l1_ratio=0.7, fit_intercept=False),
               }
 
 

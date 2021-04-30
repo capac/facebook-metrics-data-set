@@ -73,8 +73,7 @@ class RemoveMetricOutliers(BaseEstimator, TransformerMixin):
         Returns:
             ndarray: subsampled data
         '''
-        X = np.asarray(X)
-        y = np.asarray(y).reshape(-1, 1)
+        y = y.reshape(-1, 1)
         ss = StandardScaler(**self.kwargs)
         y_tr = ss.fit_transform(y)
         return (X[(np.abs(y_tr) < self.threshold).reshape(X.shape[0])],

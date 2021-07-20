@@ -32,9 +32,9 @@ output_columns = selected_columns[7:15]
 selected_fb_df = fb_df[selected_columns].copy()
 
 # input column data type
-numeric_cols = [input_columns[0]]
+numeric_cols = [selected_columns[0]] + selected_columns[7:15]
 # print(f'numeric_cols: {numeric_cols}')
-cat_onehot_cols = input_columns[1:7]
+cat_onehot_cols = selected_columns[1:7]
 # print(f'cat_onehot_cols: {cat_onehot_cols}')
 
 # substitution of NAs with median and standardization in samples
@@ -83,8 +83,8 @@ def performance_model_table(model):
 
 # coef_ weights are only available with SVR(kernel='linear')
 model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=8e1),
-              'Ridge': Ridge(fit_intercept=False),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
+              'Ridge': Ridge(fit_intercept=False),
               'ElasticNet': ElasticNet(l1_ratio=0.7, fit_intercept=False),
               }
 

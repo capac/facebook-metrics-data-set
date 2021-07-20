@@ -29,9 +29,10 @@ num_pipeline = Pipeline([
     ('std_scaler', StandardScaler())
 ])
 
-fb_df_num_tr = num_pipeline.fit_transform(fb_df[numeric_columns])
-fb_df_num = pd.DataFrame(fb_df_num_tr, columns=numeric_columns)
+# fb_df_num_tr = num_pipeline.fit_transform(fb_df[numeric_columns])
+# fb_df_num = pd.DataFrame(fb_df_num_tr, columns=numeric_columns)
 
+fb_df_num = fb_df[numeric_columns]
 fb_df_prepared = pd.concat([fb_df_num, fb_df[['Type', 'Category']]], axis=1)
 
 label_font_size = 14

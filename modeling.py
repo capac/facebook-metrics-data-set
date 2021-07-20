@@ -29,11 +29,7 @@ fb_df = pd.read_csv(data_file, sep=';')
 selected_columns = list(fb_df.columns[0:15])
 input_columns = selected_columns[0:7]
 output_columns = selected_columns[7:15]
-
-# drop NaNs from data frame
 selected_fb_df = fb_df[selected_columns].copy()
-# drops the one NA from the 'Paid' category column
-selected_fb_df.dropna(inplace=True)
 
 # input column data type
 numeric_cols = [input_columns[0]]

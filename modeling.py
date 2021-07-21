@@ -27,14 +27,15 @@ fb_df = pd.read_csv(data_file, sep=';')
 
 # column distinction
 selected_columns = list(fb_df.columns[0:15])
-input_columns = selected_columns[0:7]
-output_columns = selected_columns[7:15]
 selected_fb_df = fb_df[selected_columns].copy()
 
 # input column data type
-numeric_cols = [input_columns[0]] + output_columns
+input_columns = selected_columns[0:7]
+output_columns = selected_columns[7:15]
+
+numeric_cols = [selected_columns[0]] + selected_columns[3:6] + selected_columns[7:15]
 # print(f'numeric_cols: {numeric_cols}')
-cat_onehot_cols = input_columns[1:7]
+cat_onehot_cols = selected_columns[1:3] + [selected_columns[6]]
 # print(f'cat_onehot_cols: {cat_onehot_cols}')
 
 # substitution of NAs with median and standardization in samples

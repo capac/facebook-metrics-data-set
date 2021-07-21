@@ -1,45 +1,45 @@
 Results for Support Vector Machine Regressor: 
                                                     Performance metric       RMSE  Standard deviation
-0  Lifetime People who have liked your Page and engaged with your post      0.117               0.139
-1                                              Lifetime Post Consumers      0.170               0.132
-2                                               Lifetime Engaged Users      0.239               0.264
-3                                           Lifetime Post Consumptions      0.809               1.497
-4                     Lifetime Post reach by people who like your Page    476.846             276.347
-5                                            Lifetime Post Total Reach   5483.502            2074.740
-6         Lifetime Post Impressions by people who have liked your Page   5737.679            2703.409
-7                                      Lifetime Post Total Impressions  13467.586            5388.680
+0                                              Lifetime Post Consumers      1.506               0.842
+1  Lifetime People who have liked your Page and engaged with your post      1.625               1.777
+2                                               Lifetime Engaged Users      2.447               1.872
+3                                           Lifetime Post Consumptions      3.564               2.703
+4                     Lifetime Post reach by people who like your Page    392.504             282.106
+5         Lifetime Post Impressions by people who have liked your Page   5767.129            2067.082
+6                                            Lifetime Post Total Reach   6148.091            2485.663
+7                                      Lifetime Post Total Impressions  13675.784            2994.211
 
 Results for Random Forest Regressor: 
                                                     Performance metric      RMSE  Standard deviation
-0  Lifetime People who have liked your Page and engaged with your post     8.546               5.467
-1                                              Lifetime Post Consumers    11.719               4.167
-2                                               Lifetime Engaged Users    13.129               4.896
-3                                           Lifetime Post Consumptions    28.141              21.802
-4                     Lifetime Post reach by people who like your Page    98.246              45.665
-5                                            Lifetime Post Total Reach   299.921             259.021
-6                                      Lifetime Post Total Impressions  1245.799            1167.853
-7         Lifetime Post Impressions by people who have liked your Page  1247.303            1692.930
+0  Lifetime People who have liked your Page and engaged with your post     9.603               3.465
+1                                              Lifetime Post Consumers    14.269               4.122
+2                                               Lifetime Engaged Users    16.928               3.932
+3                                           Lifetime Post Consumptions    34.209              22.486
+4                     Lifetime Post reach by people who like your Page   139.752              40.753
+5                                            Lifetime Post Total Reach   333.475             216.252
+6                                      Lifetime Post Total Impressions  1470.653             846.684
+7         Lifetime Post Impressions by people who have liked your Page  1729.659            2030.326
 
 Results for Ridge: 
                                                     Performance metric      RMSE  Standard deviation
-0  Lifetime People who have liked your Page and engaged with your post    35.112              30.542
-1                                              Lifetime Post Consumers    42.297              25.830
-2                                               Lifetime Engaged Users    62.117              54.822
-3                                           Lifetime Post Consumptions    90.112              78.565
-4                     Lifetime Post reach by people who like your Page   354.122             233.004
-5                                            Lifetime Post Total Reach   793.453             587.288
-6         Lifetime Post Impressions by people who have liked your Page  2032.117            1222.076
-7                                      Lifetime Post Total Impressions  2340.970            2028.836
+0  Lifetime People who have liked your Page and engaged with your post    60.164              43.105
+1                                              Lifetime Post Consumers    76.766              42.733
+2                                               Lifetime Engaged Users   114.101              95.646
+3                                           Lifetime Post Consumptions   146.839             102.858
+4                     Lifetime Post reach by people who like your Page   712.156             455.892
+5                                            Lifetime Post Total Reach  1391.010             742.261
+6         Lifetime Post Impressions by people who have liked your Page  2607.570            1461.703
+7                                      Lifetime Post Total Impressions  3492.002            2317.601
 
 Results for ElasticNet: 
                                                     Performance metric       RMSE  Standard deviation
-0  Lifetime People who have liked your Page and engaged with your post    201.475              48.175
-1                                              Lifetime Post Consumers    246.755              84.186
-2                                               Lifetime Engaged Users    257.822              84.833
-3                                           Lifetime Post Consumptions    425.448             137.784
-4                     Lifetime Post reach by people who like your Page   2406.831             434.079
-5                                            Lifetime Post Total Reach   5774.223            1895.653
-6         Lifetime Post Impressions by people who have liked your Page   6226.093            2749.239
-7                                      Lifetime Post Total Impressions  11314.310            5619.536
+0  Lifetime People who have liked your Page and engaged with your post    218.257              31.441
+1                                              Lifetime Post Consumers    283.545             103.043
+2                                               Lifetime Engaged Users    301.354             111.288
+3                                           Lifetime Post Consumptions    480.711             180.753
+4                     Lifetime Post reach by people who like your Page   2628.109             485.716
+5                                            Lifetime Post Total Reach   6518.856            1860.602
+6         Lifetime Post Impressions by people who have liked your Page   6832.509            2372.941
+7                                      Lifetime Post Total Impressions  12544.471            3904.917
 
 

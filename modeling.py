@@ -62,7 +62,7 @@ def cv_performance_model(model):
         rmo = RemoveMetricOutliers(sigma=2.0)
         X_rmo, y_rmo = rmo.transform(X, y)
         y_rmo = y_rmo.ravel()
-        scores = cross_val_score(model, X_rmo, y_rmo, scoring='neg_mean_squared_error', cv=10)
+        scores = cross_val_score(model, X_rmo, y_rmo, scoring='neg_mean_squared_error', cv=5)
         rmse_scores = np.sqrt(-scores)
         rmse_mean = rmse_scores.mean()
         rmse_std = rmse_scores.std()
@@ -82,7 +82,7 @@ def performance_model_table(model):
 
 
 # coef_ weights are only available with SVR(kernel='linear')
-model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=8e1),
+model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=1e2, epsilon=1.0),
               'Random Forest Regressor': RandomForestRegressor(random_state=42),
               'Ridge': Ridge(fit_intercept=False),
               'ElasticNet': ElasticNet(l1_ratio=0.7, fit_intercept=False),

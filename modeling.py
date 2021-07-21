@@ -62,7 +62,7 @@ def cv_performance_model(model):
         rmo = RemoveMetricOutliers(sigma=2.0)
         X_rmo, y_rmo = rmo.transform(X, y)
         y_rmo = y_rmo.ravel()
-        scores = cross_val_score(model, X_rmo, y_rmo, scoring='neg_mean_squared_error', cv=5)
+        scores = cross_val_score(model, X_rmo, y_rmo, scoring='neg_mean_squared_error', cv=10)
         rmse_scores = np.sqrt(-scores)
         rmse_mean = rmse_scores.mean()
         rmse_std = rmse_scores.std()

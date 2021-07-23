@@ -5,7 +5,6 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 from time import time
-from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
@@ -38,9 +37,11 @@ numeric_cols = [selected_columns[0]] + selected_columns[3:6]
 cat_onehot_cols = selected_columns[1:3] + [selected_columns[6]]
 # print(f'cat_onehot_cols: {cat_onehot_cols}')
 
+# drop NA in 'Paid' column
+selected_fb_df.dropna(inplace=True)
+
 # substitution of NAs with median and standardization in samples
 num_pipeline = Pipeline([
-    ('imputer', SimpleImputer(strategy='median')),
     ('std_scaler', StandardScaler())
 ])
 

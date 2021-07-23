@@ -33,7 +33,7 @@ selected_fb_df = fb_df[selected_columns].copy()
 input_columns = selected_columns[0:7]
 output_columns = selected_columns[7:15]
 
-numeric_cols = [selected_columns[0]] + selected_columns[3:6] + selected_columns[7:15]
+numeric_cols = [selected_columns[0]] + selected_columns[3:6]
 # print(f'numeric_cols: {numeric_cols}')
 cat_onehot_cols = selected_columns[1:3] + [selected_columns[6]]
 # print(f'cat_onehot_cols: {cat_onehot_cols}')
@@ -84,9 +84,9 @@ def performance_model_table(model):
 
 # coef_ weights are only available with SVR(kernel='linear')
 model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=1e2, epsilon=1.0),
-              'Random Forest Regressor': RandomForestRegressor(random_state=42),
               'Ridge': Ridge(fit_intercept=False),
               'ElasticNet': ElasticNet(l1_ratio=0.7, fit_intercept=False),
+              'Random Forest Regressor': RandomForestRegressor(random_state=42),
               }
 
 

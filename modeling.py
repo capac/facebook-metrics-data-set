@@ -14,8 +14,6 @@ from sklearn.svm import SVR
 from sklearn.linear_model import Ridge, ElasticNet
 from sklearn.ensemble import RandomForestRegressor
 
-pd.set_option('display.max_colwidth', None)
-
 home = os.environ['HOME']
 home_dir = Path(home)
 work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-metrics-data-set'
@@ -52,7 +50,6 @@ full_pipeline = ColumnTransformer([
 
 # application for feature transformation pipeline
 fb_df_tr = full_pipeline.fit_transform(selected_fb_df)
-# print(f'fb_df_tr.shape: {fb_df_tr.shape}')
 
 
 # data modeling

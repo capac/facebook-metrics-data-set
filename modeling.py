@@ -5,13 +5,15 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 from time import time
+# Scikit-Learn preprocessing classes
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
-from helper_functions.remove_outliers import RemoveMetricOutliers
+from sklearn.impute import SimpleImputer
 from sklearn.model_selection import cross_val_score
+# Scikit-Learn regression models
 from sklearn.svm import SVR
-from sklearn.linear_model import Ridge, ElasticNet
+from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor
 
 home = os.environ['HOME']
@@ -20,52 +22,62 @@ work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-me
 data_file = work_dir / 'data/dataset_Facebook.csv'
 
 # data preparation
-fb_df = pd.read_csv(data_file, sep=';')
+fb_df = pd.read_csv(data_file, sep=';', na_values='NaN')
 
 # column distinction
 selected_columns = list(fb_df.columns[0:15])
-selected_fb_df = fb_df[selected_columns].copy()
 
 # input column data type
 input_columns = selected_columns[0:7]
 output_columns = selected_columns[7:15]
+# print(f'output_columns: {output_columns}')
 
-numeric_cols = [selected_columns[0]] + selected_columns[3:6]
+numeric_cols = [input_columns[0]] + input_columns[3:6] + output_columns
 # print(f'numeric_cols: {numeric_cols}')
-cat_onehot_cols = selected_columns[1:3] + [selected_columns[6]]
+cat_onehot_cols = input_columns[1:3] + [input_columns[6]]
 # print(f'cat_onehot_cols: {cat_onehot_cols}')
 
-# drop NA in 'Paid' column
-selected_fb_df.dropna(inplace=True)
-
-# substitution of NAs with median and standardization in samples
+# substitution of NA (just the one in 'Paid') and standardization of data
 num_pipeline = Pipeline([
-    ('std_scaler', StandardScaler())
+    ('impute', SimpleImputer(strategy='most_frequent', missing_values=pd.NA)),
+    ('std_scaler', StandardScaler()),
 ])
 
 full_pipeline = ColumnTransformer([
+    # 6 columns for categorical data
+    ('cat_onehot', OneHotEncoder(sparse=False, drop='first'), cat_onehot_cols),
+    # 12 columns for numerical data
     ('num', num_pipeline, numeric_cols),
-    ('cat_onehot', OneHotEncoder(), cat_onehot_cols),
 ])
 
 # application for feature transformation pipeline
-fb_df_tr = full_pipeline.fit_transform(selected_fb_df)
+input_fb_df = fb_df[selected_columns].copy()
+# input_fb_df.dropna(inplace=True)
+fb_df_tr = full_pipeline.fit_transform(input_fb_df)
 
 
 # data modeling
-def cv_performance_model(model):
+def cv_performance_model(model, threshold=1e2):
     cross_val_scores = list()
-    for col in output_columns:
+    # 8 columns for preformance metrics
+    for col in range(7, 15):
         X = fb_df_tr
-        y = selected_fb_df[col].values
-        rmo = RemoveMetricOutliers(sigma=2.0)
-        X_rmo, y_rmo = rmo.transform(X, y)
-        y_rmo = y_rmo.ravel()
-        scores = cross_val_score(model, X_rmo, y_rmo, scoring='neg_mean_squared_error', cv=5)
+        y = fb_df_tr[:, col]
+        X_thr = X[(np.abs(y) < threshold)]
+        y_thr = y[(np.abs(y) < threshold)]
+        # print(f'Number of labels with {model.__class__.__name__} model: {y_thr.shape[0]}')
+        scores = cross_val_score(model, X_thr, y_thr, scoring='neg_mean_squared_error', cv=5)
         rmse_scores = np.sqrt(-scores)
         rmse_mean = rmse_scores.mean()
+        # print(f'col: {col}, rmse_mean: {rmse_mean}')
         rmse_std = rmse_scores.std()
-        cross_val_scores.append({'rmse': round(rmse_mean, 3), 'std': round(rmse_std, 3)})
+        if rmse_mean != 0:
+            err = rmse_std/rmse_mean
+        else:
+            err = 0.0
+        cross_val_scores.append({'rmse': round(rmse_mean, 6),
+                                 'std': round(rmse_std, 6),
+                                 'perc': round(100*err, 6)})
     return cross_val_scores
 
 
@@ -75,18 +87,17 @@ def performance_model_table(model):
     reg_df = pd.DataFrame(cross_val_scores, index=output_columns)
     reg_df.sort_values(by='rmse', ascending=True, inplace=True)
     reg_df.reset_index(inplace=True)
-    reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE', 'std': 'Standard deviation'}, inplace=True)
+    reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE',
+                           'std': 'Standard deviation', 'perc': 'Error (%)'}, inplace=True)
     print(f'Time elapsed for {name}: {round(time() - t0, 2)} s.')
     return reg_df
 
 
 # coef_ weights are only available with SVR(kernel='linear')
-model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=1e2, epsilon=1.0),
-              'Ridge': Ridge(fit_intercept=False),
-              'ElasticNet': ElasticNet(l1_ratio=0.7, fit_intercept=False),
-              'Random Forest Regressor': RandomForestRegressor(random_state=42),
+model_list = {'Support Vector Machine Regressor': SVR(),
+              'Ridge': Ridge(),
+              'Random Forest Regressor': RandomForestRegressor(n_jobs=-1),
               }
-
 
 # model calculation and saving output to file
 with open(work_dir / 'stats_output_no_outliers_in_metrics.txt', 'w') as f:

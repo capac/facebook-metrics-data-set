@@ -9,7 +9,6 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OrdinalEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
-from helper_functions.remove_outliers import RemoveMetricOutliers
 from sklearn.svm import SVR
 
 pd.set_option('display.max_colwidth', None)
@@ -61,10 +60,7 @@ def feature_importances_plot(model, col, filename):
     sns.set_context("talk")
     X = fb_df_num_tr
     y = selected_fb_df[col].values
-    rmo = RemoveMetricOutliers(sigma=2.0)
-    X_rmo, y_rmo = rmo.transform(X, y)
-    y_rmo = y_rmo.ravel()
-    model.fit(X_rmo, y_rmo)
+    model.fit(X, y)
     # print(f'model.scores_: {model.scores_}')
     sorted_features_df = pd.DataFrame({'contributing_features': model.coef_[0]},
                                       index=attrib_columns).sort_values(by='contributing_features',

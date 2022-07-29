@@ -13,8 +13,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.model_selection import cross_val_score
 # Scikit-Learn regression models
 from sklearn.svm import SVR
-from sklearn.linear_model import Ridge
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression, Ridge
 
 home = os.environ['HOME']
 home_dir = Path(home)
@@ -57,7 +56,7 @@ fb_df_tr = full_pipeline.fit_transform(input_fb_df)
 
 
 # data modeling
-def cv_performance_model(model, threshold=1e2):
+def cv_performance_model(model, threshold=3.0):
     cross_val_scores = list()
     # 8 columns for preformance metrics
     for col in range(7, 15):
@@ -65,16 +64,13 @@ def cv_performance_model(model, threshold=1e2):
         y = fb_df_tr[:, col]
         X_thr = X[(np.abs(y) < threshold)]
         y_thr = y[(np.abs(y) < threshold)]
-        # print(f'Number of labels with {model.__class__.__name__} model: {y_thr.shape[0]}')
-        scores = cross_val_score(model, X_thr, y_thr, scoring='neg_mean_squared_error', cv=5)
+        # print(f'{selected_columns[col]}, {model.__class__.__name__} model: {y_thr.shape[0]}')
+        scores = cross_val_score(model, X_thr, y_thr, scoring='neg_mean_squared_error', cv=10)
         rmse_scores = np.sqrt(-scores)
         rmse_mean = rmse_scores.mean()
         # print(f'col: {col}, rmse_mean: {rmse_mean}')
         rmse_std = rmse_scores.std()
-        if rmse_mean != 0:
-            err = rmse_std/rmse_mean
-        else:
-            err = 0.0
+        err = rmse_std/rmse_mean
         cross_val_scores.append({'rmse': round(rmse_mean, 6),
                                  'std': round(rmse_std, 6),
                                  'perc': round(100*err, 6)})
@@ -85,6 +81,7 @@ def performance_model_table(model):
     t0 = time()
     cross_val_scores = cv_performance_model(model)
     reg_df = pd.DataFrame(cross_val_scores, index=output_columns)
+    pd.set_option('display.precision', 10)
     reg_df.sort_values(by='rmse', ascending=True, inplace=True)
     reg_df.reset_index(inplace=True)
     reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE',
@@ -94,9 +91,9 @@ def performance_model_table(model):
 
 
 # coef_ weights are only available with SVR(kernel='linear')
-model_list = {'Support Vector Machine Regressor': SVR(),
+model_list = {'Support Vector Machine Regressor': SVR(kernel='linear'),
               'Ridge': Ridge(),
-              'Random Forest Regressor': RandomForestRegressor(n_jobs=-1),
+              'Linear Regression': LinearRegression(),
               }
 
 # model calculation and saving output to file

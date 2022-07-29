@@ -14,7 +14,7 @@ home_dir = Path(home)
 work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-metrics-data-set'
 data_file = work_dir / 'data/dataset_Facebook.csv'
 
-fb_df = pd.read_csv(data_file, sep=';')
+fb_df = pd.read_csv(data_file, sep=';', na_values='NaN')
 
 input_columns = list(fb_df.columns[0:7])
 performance_columns = list(fb_df.columns[7:15])

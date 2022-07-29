@@ -65,7 +65,7 @@ def cv_performance_model(model, threshold=3.0):
         X_thr = X[(np.abs(y) < threshold)]
         y_thr = y[(np.abs(y) < threshold)]
         # print(f'{selected_columns[col]}, {model.__class__.__name__} model: {y_thr.shape[0]}')
-        scores = cross_val_score(model, X_thr, y_thr, scoring='neg_mean_squared_error', cv=10)
+        scores = cross_val_score(model, X_thr, y_thr, scoring='neg_mean_squared_error', cv=5)
         rmse_scores = np.sqrt(-scores)
         rmse_mean = rmse_scores.mean()
         # print(f'col: {col}, rmse_mean: {rmse_mean}')

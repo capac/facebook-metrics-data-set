@@ -1,0 +1,25 @@
+Result for 'Lifetime Post Total Reach': 
+ShapiroResult(statistic=0.8456948399543762, pvalue=1.113106213767387e-21)
+
+Result for 'Lifetime Post Total Impressions': 
+ShapiroResult(statistic=0.9449859857559204, pvalue=1.1524113911406952e-12)
+
+Result for 'Lifetime Engaged Users': 
+ShapiroResult(statistic=0.9119329452514648, pvalue=1.885314287295597e-16)
+
+Result for 'Lifetime Post Consumers': 
+ShapiroResult(statistic=0.9113819599151611, pvalue=1.6654053435981693e-16)
+
+Result for 'Lifetime Post Consumptions': 
+ShapiroResult(statistic=0.5508420467376709, pvalue=8.359382057433806e-34)
+
+Result for 'Lifetime Post Impressions by people who have liked your Page': 
+ShapiroResult(statistic=0.3202056288719177, pvalue=2.8446709150409868e-39)
+
+Result for 'Lifetime Post reach by people who like your Page': 
+ShapiroResult(statistic=0.634164035320282, pvalue=2.9587660656948604e-31)
+
+Result for 'Lifetime People who have liked your Page and engaged with your post': 
+ShapiroResult(statistic=0.6197054386138916, pvalue=9.94599405965207e-32)
+
+

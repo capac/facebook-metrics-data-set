@@ -5,7 +5,6 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
 
 
 class DataPreparation():
@@ -15,6 +14,8 @@ class DataPreparation():
         self.data_file = data_file
         self.fb_df = pd.read_csv(self.data_file, sep=';', na_values='NaN')
 
+        # fill NaN of 'Paid' column with mode
+        self.fb_df.fillna(value=self.fb_df['Paid'].mode().values[0], inplace=True)
         # column distinction
         self.selected_columns = list(self.fb_df.columns[0:15])
         # input column data type
@@ -25,9 +26,8 @@ class DataPreparation():
         self.cat_onehot_cols = self.input_columns[1:3] + [self.input_columns[6]]
 
     def transform(self):
-        # substitution of NA (just for the one in 'Paid') and standardization of data
+        # standardization of data
         num_pipeline = Pipeline([
-            ('impute', SimpleImputer(strategy='most_frequent', missing_values=pd.NA)),
             ('std_scaler', StandardScaler()),
         ])
         full_pipeline = ColumnTransformer([

@@ -18,7 +18,7 @@ data_file = work_dir / 'data/dataset_Facebook.csv'
 
 # data preparation
 data_prep = DataPreparation(data_file)
-fb_df_tr = data_prep.fit_transform()
+fb_df_tr = data_prep.transform()
 
 
 # data modeling

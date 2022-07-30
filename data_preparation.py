@@ -24,7 +24,7 @@ class DataPreparation():
         self.numeric_cols = [self.input_columns[0]] + self.input_columns[3:6] + self.output_columns
         self.cat_onehot_cols = self.input_columns[1:3] + [self.input_columns[6]]
 
-    def fit_transform(self):
+    def transform(self):
         # substitution of NA (just for the one in 'Paid') and standardization of data
         num_pipeline = Pipeline([
             ('impute', SimpleImputer(strategy='most_frequent', missing_values=pd.NA)),

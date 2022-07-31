@@ -21,9 +21,10 @@ class DataPreparation():
         # input column data type
         self.input_columns = self.selected_columns[0:7]
         self.output_columns = self.selected_columns[7:15]
-        # numerical and categorical columns
-        self.numeric_cols = [self.input_columns[0]] + self.input_columns[3:6] + self.output_columns
-        self.cat_onehot_cols = self.input_columns[1:3] + [self.input_columns[6]]
+        # numerical columns: all posts and all performance metrics
+        self.numeric_cols = [self.input_columns[0]] + self.output_columns
+        # categorical columns: type, category, hour, month, day, paid
+        self.cat_onehot_cols = self.input_columns[1:7]
 
     def transform(self):
         # standardization of data

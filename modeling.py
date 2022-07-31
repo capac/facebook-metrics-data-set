@@ -18,28 +18,28 @@ data_file = work_dir / 'data/dataset_Facebook.csv'
 
 # data preparation
 data_prep = DataPreparation(data_file)
-fb_df_tr = data_prep.transform()
+fb_na_tr = data_prep.transform()
 
 
 # data modeling
 def cv_performance_model(model, threshold=3.0):
-    cross_val_scores = list()
+    cross_val_scores = []
     # 8 columns for preformance metrics
-    for col in range(7, 15):
-        X = fb_df_tr
-        y = fb_df_tr[:, col]
-        X_thr = X[(np.abs(y) < threshold)]
-        y_thr = y[(np.abs(y) < threshold)]
-        # print(f'{selected_columns[col]}, {model.__class__.__name__} model: {y_thr.shape[0]}')
-        scores = cross_val_score(model, X_thr, y_thr, scoring='neg_mean_squared_error', cv=5)
-        rmse_scores = np.sqrt(-scores)
-        rmse_mean = rmse_scores.mean()
-        # print(f'col: {col}, rmse_mean: {rmse_mean}')
-        rmse_std = rmse_scores.std()
-        err = rmse_std/rmse_mean
+    num_metrics = fb_na_tr.shape[1]-1
+    for col in range(num_metrics, num_metrics-8, -1):
+        X, y = fb_na_tr, fb_na_tr[:, col]
+        X_thr, y_thr = X[(np.abs(y) < threshold)], y[(np.abs(y) < threshold)]
+        scores = cross_val_score(model, X_thr, y_thr, cv=5,
+                                 scoring='neg_root_mean_squared_error')
+        r2_scores = cross_val_score(model, X_thr, y_thr, cv=5, scoring='r2')
+        rmse_mean = -scores.mean()
+        rmse_std = scores.std()
+        err_perc = 100*rmse_std/rmse_mean
+        r2_mean = r2_scores.mean()
         cross_val_scores.append({'rmse': round(rmse_mean, 6),
                                  'std': round(rmse_std, 6),
-                                 'perc': round(100*err, 6)})
+                                 'perc': round(err_perc, 6),
+                                 'r2': round(r2_mean, 4)})
     return cross_val_scores
 
 
@@ -50,7 +50,7 @@ def performance_model_table(model):
     reg_df.sort_values(by='rmse', ascending=True, inplace=True)
     reg_df.reset_index(inplace=True)
     reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE',
-                           'std': 'Standard deviation', 'perc': 'Error (%)'}, inplace=True)
+                           'std': 'SD (sigma)', 'perc': 'Error (%)'}, inplace=True)
     print(f'Time elapsed for {name}: {round(time() - t0, 2)} s.')
     return reg_df
 

@@ -24,9 +24,9 @@ fb_na_tr = data_prep.transform()
 # data modeling
 def cv_performance_model(model, threshold=3.0):
     cross_val_scores = []
-    # 8 columns for preformance metrics
+    # 12 columns for preformance metrics
     num_metrics = fb_na_tr.shape[1]-1
-    for col in range(num_metrics, num_metrics-8, -1):
+    for col in range(num_metrics, num_metrics-12, -1):
         X, y = fb_na_tr, fb_na_tr[:, col]
         X_thr, y_thr = X[(np.abs(y) < threshold)], y[(np.abs(y) < threshold)]
         scores = cross_val_score(model, X_thr, y_thr, cv=5,

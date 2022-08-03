@@ -7,6 +7,7 @@ import numpy as np
 from time import time
 from data_preparation import DataPreparation
 # Scikit-Learn regression models
+from sklearn.base import clone
 from sklearn.model_selection import cross_val_score
 from sklearn.svm import SVR
 from sklearn.linear_model import LinearRegression, Ridge
@@ -27,11 +28,12 @@ def cv_performance_model(model, threshold=3.0):
     # 12 columns for preformance metrics
     num_metrics = fb_na_tr.shape[1]-1
     for col in range(num_metrics, num_metrics-12, -1):
+        clone_model = clone(model)
         X, y = fb_na_tr, fb_na_tr[:, col]
         X_thr, y_thr = X[(np.abs(y) < threshold)], y[(np.abs(y) < threshold)]
-        scores = cross_val_score(model, X_thr, y_thr, cv=5,
+        scores = cross_val_score(clone_model, X_thr, y_thr, cv=5,
                                  scoring='neg_root_mean_squared_error')
-        r2_scores = cross_val_score(model, X_thr, y_thr, cv=5, scoring='r2')
+        r2_scores = cross_val_score(clone_model, X_thr, y_thr, cv=5, scoring='r2')
         rmse_mean = -scores.mean()
         rmse_std = scores.std()
         err_perc = 100*rmse_std/rmse_mean

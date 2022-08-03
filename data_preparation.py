@@ -16,12 +16,15 @@ class DataPreparation():
 
         # fill NaN of 'Paid' column with mode
         self.fb_df.fillna(value=self.fb_df['Paid'].mode().values[0], inplace=True)
-        # column distinction
-        self.selected_columns = list(self.fb_df.columns[0:15])
-        # input column data type
-        self.input_columns = self.selected_columns[0:7]
-        self.output_columns = self.selected_columns[7:15]
-        # numerical columns: all posts and all performance metrics
+        # fill NaN of 'like' column with median
+        self.fb_df.fillna(value=self.fb_df['like'].median(), inplace=True)
+        # fill NaN of 'share' column with median
+        self.fb_df.fillna(value=self.fb_df['share'].median(), inplace=True)
+        # input columns
+        self.input_columns = list(self.fb_df.columns[0:7])
+        # output columns
+        self.output_columns = list(self.fb_df.columns[7:19])
+        # numerical columns: all posts and performance metrics
         self.numeric_cols = [self.input_columns[0]] + self.output_columns
         # categorical columns: type, category, hour, month, day, paid
         self.cat_onehot_cols = self.input_columns[1:7]
@@ -38,5 +41,5 @@ class DataPreparation():
             ('num', num_pipeline, self.numeric_cols),
         ])
         # application for feature transformation pipeline
-        input_fb_df = self.fb_df[self.selected_columns].copy()
+        input_fb_df = self.fb_df.copy()
         return full_pipeline.fit_transform(input_fb_df)

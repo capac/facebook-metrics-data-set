@@ -27,7 +27,7 @@ def cv_performance_model(model, threshold=3.0):
     cross_val_scores = []
     # 12 columns for preformance metrics
     num_metrics = fb_na_tr.shape[1]-1
-    for col in range(num_metrics, num_metrics-12, -1):
+    for col in range(num_metrics, num_metrics-len(data_prep.output_columns), -1):
         clone_model = clone(model)
         X, y = fb_na_tr, fb_na_tr[:, col]
         X_thr, y_thr = X[(np.abs(y) < threshold)], y[(np.abs(y) < threshold)]

@@ -64,7 +64,7 @@ def performance_model_table(model):
 
 
 # coef_ weights are only available with SVR(kernel='linear')
-model_list = {'Support Vector Machine Regressor': SVR(kernel='linear'),
+model_list = {'Support Vector Machine Regressor': SVR(kernel='rbf'),
               'Ridge': Ridge(random_state=42),
               'Linear Regression': LinearRegression(),
               }

@@ -49,9 +49,9 @@ class DataPreparation():
         # fill NaN of 'share' column with median
         self.fb_df.fillna(value=self.fb_df['Share'].median(), inplace=True)
         # input columns
-        self.input_columns = list(self.fb_df.columns[0:7])
+        self.input_columns = self.fb_df.columns[0:7].tolist()
         # output columns
-        self.output_columns = list(self.fb_df.columns[7:19])
+        self.output_columns = self.fb_df.columns[7:19].tolist()
         # numerical columns: all posts and performance metrics
         self.numeric_cols = [self.input_columns[0]] + self.output_columns
         # categorical columns: type, category, hour, month, day, paid

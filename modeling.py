@@ -34,14 +34,18 @@ def cv_performance_model(model, threshold=3.0):
         scores = cross_val_score(clone_model, X_thr, y_thr, cv=5,
                                  scoring='neg_root_mean_squared_error')
         r2_scores = cross_val_score(clone_model, X_thr, y_thr, cv=5, scoring='r2')
+        map_scores = cross_val_score(clone_model, X_thr, y_thr, cv=5,
+                                     scoring='neg_mean_absolute_percentage_error')
         rmse_mean = -scores.mean()
         rmse_std = scores.std()
         err_perc = 100*rmse_std/rmse_mean
         r2_mean = r2_scores.mean()
+        map_err = -100*map_scores.mean()
         cross_val_scores.append({'rmse': round(rmse_mean, 6),
                                  'std': round(rmse_std, 6),
                                  'perc': round(err_perc, 6),
-                                 'r2': round(r2_mean, 4)})
+                                 'r2': round(r2_mean, 4),
+                                 'map_err': round(map_err, 4)})
     return cross_val_scores
 
 
@@ -49,10 +53,11 @@ def performance_model_table(model):
     t0 = time()
     cross_val_scores = cv_performance_model(model)
     reg_df = pd.DataFrame(cross_val_scores, index=data_prep.output_columns)
-    reg_df.sort_values(by='rmse', ascending=True, inplace=True)
+    reg_df.sort_values(by='map_err', ascending=True, inplace=True)
     reg_df.reset_index(inplace=True)
     reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE',
-                           'std': 'SD (sigma)', 'perc': 'Error (%)'}, inplace=True)
+                           'std': 'SD (sigma)', 'perc': 'Error (%)',
+                           'map_err': 'MAPE (%)'}, inplace=True)
     print(f'Time elapsed for {name}: {round(time() - t0, 2)} s.')
     return reg_df
 

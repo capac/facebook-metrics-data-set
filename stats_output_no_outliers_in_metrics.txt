@@ -1,46 +1,46 @@
 Results for Support Vector Machine Regressor: 
-                                   Performance metric      RMSE  SD (sigma)   Error (%)      r2
-0                             Lifetime Post Consumers  0.057753    0.011104   19.226663  0.9800
-1                              Lifetime Engaged Users  0.060552    0.019109   31.558377  0.9764
-2                     Lifetime Post Total Impressions  0.061739    0.010996   17.811205  0.9858
-3                           Lifetime Post Total Reach  0.063029    0.010690   16.959703  0.9789
-4                                                like  0.064972    0.045553   70.111123  0.9838
-5   Lifetime People who have liked your Page and e...  0.066430    0.014211   21.392753  0.9845
-6                                             comment  0.069684    0.048005   68.888902  0.9820
-7   Lifetime Post Impressions by people who have l...  0.073840    0.013323   18.043710  0.9879
-8                                               share  0.075120    0.039465   52.536347  0.9589
-9    Lifetime Post reach by people who like your Page  0.075172    0.036076   47.991246  0.9401
-10                         Lifetime Post Consumptions  0.112901    0.107515   95.229615  0.9159
-11                                 Total Interactions  0.114866    0.127207  110.743322  0.9258
+            Performance metric      RMSE  SD (sigma)   Error (%)      r2
+0            LT Post Consumers  0.057753    0.011104   19.226663  0.9800
+1                LT Engd Users  0.060552    0.019109   31.558377  0.9764
+2            LT Post Total Imp  0.061739    0.010996   17.811205  0.9858
+3          LT Post Total Reach  0.063029    0.010690   16.959703  0.9789
+4                         Like  0.064972    0.045553   70.111123  0.9838
+5        LT People + Engd Post  0.066430    0.014211   21.392753  0.9845
+6                      Comment  0.069684    0.048005   68.888902  0.9820
+7     LT Post Imp + Liked Page  0.073840    0.013323   18.043710  0.9879
+8                        Share  0.075120    0.039465   52.536347  0.9589
+9   LT Post Reach + Liked Page  0.075172    0.036076   47.991246  0.9401
+10             LT Post Consump  0.112901    0.107515   95.229615  0.9159
+11                   Total Int  0.114866    0.127207  110.743322  0.9258
 
 Results for Ridge: 
-                                   Performance metric      RMSE  SD (sigma)   Error (%)      r2
-0                           Lifetime Post Total Reach  0.008862    0.003687   41.611242  0.9994
-1                             Lifetime Post Consumers  0.010031    0.003322   33.121156  0.9994
-2                              Lifetime Engaged Users  0.011715    0.004363   37.241181  0.9990
-3                     Lifetime Post Total Impressions  0.012771    0.001241    9.715964  0.9994
-4   Lifetime Post Impressions by people who have l...  0.016135    0.007620   47.228693  0.9993
-5                                             comment  0.017691    0.004386   24.794096  0.9992
-6                                  Total Interactions  0.018965    0.014511   76.514505  0.9986
-7                                               share  0.021077    0.012766   60.571243  0.9965
-8   Lifetime People who have liked your Page and e...  0.021092    0.008140   38.590453  0.9982
-9                                                like  0.025602    0.019098   74.595976  0.9974
-10   Lifetime Post reach by people who like your Page  0.035577    0.039866  112.056121  0.9837
-11                         Lifetime Post Consumptions  0.036238    0.046047  127.069086  0.9876
+            Performance metric      RMSE  SD (sigma)   Error (%)      r2
+0          LT Post Total Reach  0.008862    0.003687   41.611242  0.9994
+1            LT Post Consumers  0.010031    0.003322   33.121156  0.9994
+2                LT Engd Users  0.011715    0.004363   37.241181  0.9990
+3            LT Post Total Imp  0.012771    0.001241    9.715964  0.9994
+4     LT Post Imp + Liked Page  0.016135    0.007620   47.228693  0.9993
+5                      Comment  0.017691    0.004386   24.794096  0.9992
+6                    Total Int  0.018965    0.014511   76.514505  0.9986
+7                        Share  0.021077    0.012766   60.571243  0.9965
+8        LT People + Engd Post  0.021092    0.008140   38.590453  0.9982
+9                         Like  0.025602    0.019098   74.595976  0.9974
+10  LT Post Reach + Liked Page  0.035577    0.039866  112.056121  0.9837
+11             LT Post Consump  0.036238    0.046047  127.069086  0.9876
 
 Results for Linear Regression: 
-                                   Performance metric      RMSE  SD (sigma)   Error (%)      r2
-0                             Lifetime Post Consumers  0.001990    0.002331  117.176761  1.0000
-1   Lifetime Post Impressions by people who have l...  0.002922    0.003491  119.467402  1.0000
-2                                  Total Interactions  0.003388    0.003902  115.182975  0.9999
-3                          Lifetime Post Consumptions  0.003875    0.004859  125.396338  0.9999
-4                           Lifetime Post Total Reach  0.004186    0.004891  116.849529  0.9998
-5   Lifetime People who have liked your Page and e...  0.004810    0.004486   93.268592  0.9998
-6                                             comment  0.005280    0.003823   72.418352  0.9998
-7    Lifetime Post reach by people who like your Page  0.005347    0.004872   91.120021  0.9993
-8                     Lifetime Post Total Impressions  0.005864    0.006647  113.353288  0.9998
-9                                                like  0.006697    0.012553  187.448380  0.9992
-10                             Lifetime Engaged Users  0.006929    0.011349  163.787596  0.9990
-11                                              share  0.011364    0.018259  160.674966  0.9979
+            Performance metric      RMSE  SD (sigma)   Error (%)      r2
+0            LT Post Consumers  0.001990    0.002331  117.176761  1.0000
+1     LT Post Imp + Liked Page  0.002922    0.003491  119.467402  1.0000
+2                    Total Int  0.003388    0.003902  115.182975  0.9999
+3              LT Post Consump  0.003875    0.004859  125.396338  0.9999
+4          LT Post Total Reach  0.004186    0.004891  116.849529  0.9998
+5        LT People + Engd Post  0.004810    0.004486   93.268592  0.9998
+6                      Comment  0.005280    0.003823   72.418352  0.9998
+7   LT Post Reach + Liked Page  0.005347    0.004872   91.120021  0.9993
+8            LT Post Total Imp  0.005864    0.006647  113.353288  0.9998
+9                         Like  0.006697    0.012553  187.448380  0.9992
+10               LT Engd Users  0.006929    0.011349  163.787596  0.9990
+11                       Share  0.011364    0.018259  160.674966  0.9979
 
 

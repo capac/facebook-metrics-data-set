@@ -14,12 +14,40 @@ class DataPreparation():
         self.data_file = data_file
         self.fb_df = pd.read_csv(self.data_file, sep=';', na_values='NaN')
 
+        # shorten column names
+        self.fb_df.rename(columns={
+                          'Lifetime Post Total Reach':
+                          'LT Post Total Reach',
+                          'Lifetime Post Total Impressions':
+                          'LT Post Total Imp',
+                          'Lifetime Engaged Users':
+                          'LT Engd Users',
+                          'Lifetime Post Consumers':
+                          'LT Post Consumers',
+                          'Lifetime Post Consumptions':
+                          'LT Post Consump',
+                          'Lifetime Post Impressions by people who have liked your Page':
+                          'LT Post Imp + Liked Page',
+                          'Lifetime Post reach by people who like your Page':
+                          'LT Post Reach + Liked Page',
+                          'Lifetime People who have liked your Page and engaged with your post':
+                          'LT People + Engd Post',
+                          'comment':
+                          'Comment',
+                          'like':
+                          'Like',
+                          'share':
+                          'Share',
+                          'Total Interactions':
+                          'Total Int'
+                          }, inplace=True)
+
         # fill NaN of 'Paid' column with mode
         self.fb_df.fillna(value=self.fb_df['Paid'].mode().values[0], inplace=True)
         # fill NaN of 'like' column with median
-        self.fb_df.fillna(value=self.fb_df['like'].median(), inplace=True)
+        self.fb_df.fillna(value=self.fb_df['Like'].median(), inplace=True)
         # fill NaN of 'share' column with median
-        self.fb_df.fillna(value=self.fb_df['share'].median(), inplace=True)
+        self.fb_df.fillna(value=self.fb_df['Share'].median(), inplace=True)
         # input columns
         self.input_columns = list(self.fb_df.columns[0:7])
         # output columns

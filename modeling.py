@@ -52,8 +52,9 @@ def cv_performance_model(model, threshold=3.0):
 def performance_model_table(model):
     t0 = time()
     cross_val_scores = cv_performance_model(model)
+    data_prep.output_columns.reverse()
     reg_df = pd.DataFrame(cross_val_scores, index=data_prep.output_columns)
-    reg_df.sort_values(by='map_err', ascending=True, inplace=True)
+    reg_df.sort_values(by='rmse', ascending=True, inplace=True)
     reg_df.reset_index(inplace=True)
     reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE',
                            'std': 'SD (sigma)', 'perc': 'Error (%)',

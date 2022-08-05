@@ -10,7 +10,8 @@ from data_preparation import DataPreparation
 from sklearn.base import clone
 from sklearn.model_selection import cross_val_score
 from sklearn.svm import SVR
-from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.linear_model import Ridge
+from sklearn.ensemble import RandomForestRegressor
 
 home = os.environ['HOME']
 home_dir = Path(home)
@@ -29,23 +30,16 @@ def cv_performance_model(model, threshold=3.0):
     num_metrics = fb_na_tr.shape[1]-1
     for col in range(num_metrics, num_metrics-len(data_prep.output_columns), -1):
         clone_model = clone(model)
-        X, y = fb_na_tr[:, 0:len(data_prep.numeric_cols)], fb_na_tr[:, col]
+        X, y = fb_na_tr[:, 0:num_metrics-len(data_prep.output_columns)+1], fb_na_tr[:, col]
         X_thr, y_thr = X[(np.abs(y) < threshold)], y[(np.abs(y) < threshold)]
         scores = cross_val_score(clone_model, X_thr, y_thr, cv=5,
                                  scoring='neg_root_mean_squared_error')
-        r2_scores = cross_val_score(clone_model, X_thr, y_thr, cv=5, scoring='r2')
-        map_scores = cross_val_score(clone_model, X_thr, y_thr, cv=5,
-                                     scoring='neg_mean_absolute_percentage_error')
         rmse_mean = -scores.mean()
         rmse_std = scores.std()
         err_perc = 100*rmse_std/rmse_mean
-        r2_mean = r2_scores.mean()
-        map_err = -100*map_scores.mean()
         cross_val_scores.append({'rmse': round(rmse_mean, 6),
                                  'std': round(rmse_std, 6),
-                                 'perc': round(err_perc, 6),
-                                 'r2': round(r2_mean, 4),
-                                 'map_err': round(map_err, 4)})
+                                 'perc': round(err_perc, 6)})
     return cross_val_scores
 
 
@@ -57,16 +51,15 @@ def performance_model_table(model):
     reg_df.sort_values(by='rmse', ascending=True, inplace=True)
     reg_df.reset_index(inplace=True)
     reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE',
-                           'std': 'SD (sigma)', 'perc': 'Error (%)',
-                           'map_err': 'MAPE (%)'}, inplace=True)
+                           'std': 'SD (sigma)', 'perc': 'Error (%)'}, inplace=True)
     print(f'Time elapsed for {name}: {round(time() - t0, 2)} s.')
     return reg_df
 
 
 # coef_ weights are only available with SVR(kernel='linear')
 model_list = {'Support Vector Machine Regressor': SVR(kernel='rbf'),
+              'Random Forest Regressor': RandomForestRegressor(random_state=42, n_jobs=-1),
               'Ridge': Ridge(random_state=42),
-              'Linear Regression': LinearRegression(),
               }
 
 # model calculation and saving output to file

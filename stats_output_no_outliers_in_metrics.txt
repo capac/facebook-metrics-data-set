@@ -1,46 +1,46 @@
 Results for Support Vector Machine Regressor: 
-            Performance metric      RMSE  SD (sigma)  Error (%)      r2  MAPE (%)
-0     LT Post Imp + Liked Page  0.307992    0.084235  27.349571  0.0379  125.5841
-1                      Comment  0.451652    0.067258  14.891534 -0.0879  119.9605
-2            LT Post Total Imp  0.457994    0.049601  10.830134 -0.0008  135.3516
-3                         Like  0.473290    0.083770  17.699565 -0.0831  197.5671
-4                    Total Int  0.485001    0.105067  21.663216 -0.1342  852.7734
-5              LT Post Consump  0.520315    0.089032  17.111144  0.0646  285.6154
-6                        Share  0.542079    0.072333  13.343638 -0.0570  275.9768
-7            LT Post Consumers  0.603497    0.114841  19.029303  0.0277  122.8284
-8                LT Engd Users  0.646333    0.089854  13.902141  0.0338  152.4656
-9          LT Post Total Reach  0.659547    0.056350   8.543732 -0.0480  143.6630
-10       LT People + Engd Post  0.663496    0.086068  12.971862  0.0992  131.8722
-11  LT Post Reach + Liked Page  0.691361    0.106319  15.378218  0.0528  125.2326
+            Performance metric      RMSE  SD (sigma)  Error (%)
+0     LT Post Imp + Liked Page  0.310746    0.082697  26.612517
+1                      Comment  0.441624    0.063401  14.356233
+2            LT Post Total Imp  0.448418    0.043931   9.796884
+3                         Like  0.457045    0.080584  17.631536
+4                    Total Int  0.457478    0.094322  20.617710
+5              LT Post Consump  0.506676    0.071972  14.204691
+6                        Share  0.523612    0.077203  14.744364
+7            LT Post Consumers  0.565956    0.076051  13.437578
+8                LT Engd Users  0.620223    0.071285  11.493479
+9          LT Post Total Reach  0.631954    0.068546  10.846703
+10       LT People + Engd Post  0.661163    0.074248  11.229951
+11  LT Post Reach + Liked Page  0.670161    0.113934  17.001004
+
+Results for Random Forest Regressor: 
+            Performance metric      RMSE  SD (sigma)  Error (%)
+0   LT Post Reach + Liked Page  0.314805    0.086901  27.604826
+1            LT Post Consumers  0.461591    0.047691  10.331966
+2                LT Engd Users  0.487918    0.069733  14.292046
+3                        Share  0.496260    0.039305   7.920158
+4          LT Post Total Reach  0.505282    0.116388  23.034266
+5        LT People + Engd Post  0.526334    0.081213  15.429952
+6                      Comment  0.572041    0.080994  14.158746
+7            LT Post Total Imp  0.614955    0.156572  25.460681
+8                         Like  0.677597    0.134579  19.861267
+9                    Total Int  0.724413    0.059978   8.279460
+10             LT Post Consump  0.727692    0.098406  13.523033
+11    LT Post Imp + Liked Page  0.766577    0.083444  10.885300
 
 Results for Ridge: 
-            Performance metric      RMSE  SD (sigma)  Error (%)      r2  MAPE (%)
-0   LT Post Reach + Liked Page  0.306077    0.087091  28.454061  0.0541  112.1331
-1            LT Post Consumers  0.437236    0.062743  14.349918 -0.0223  112.2088
-2                        Share  0.451561    0.047135  10.438208  0.0258  137.8572
-3                LT Engd Users  0.458858    0.081202  17.696643 -0.0175  142.5177
-4          LT Post Total Reach  0.466029    0.103616  22.233690 -0.0423  535.9645
-5            LT Post Total Imp  0.518517    0.075735  14.605997  0.0340  276.6821
-6        LT People + Engd Post  0.531554    0.109695  20.636694  0.0078  361.7579
-7                      Comment  0.613497    0.135470  22.081607 -0.0200  125.7525
-8                         Like  0.646871    0.088891  13.741755  0.0202  161.9840
-9                    Total Int  0.650010    0.070169  10.795010 -0.0117  128.4757
-10             LT Post Consump  0.665078    0.069203  10.405202  0.0908  147.8401
-11    LT Post Imp + Liked Page  0.680618    0.116700  17.146230  0.0860  132.3186
-
-Results for Linear Regression: 
-            Performance metric      RMSE  SD (sigma)  Error (%)      r2  MAPE (%)
-0     LT Post Imp + Liked Page  0.306831    0.086646  28.238870  0.0481  117.6265
-1                      Comment  0.437863    0.063460  14.493145 -0.0252  113.9148
-2            LT Post Total Imp  0.452125    0.047701  10.550445  0.0235  139.8541
-3                         Like  0.459799    0.080953  17.606167 -0.0222  144.5413
-4                    Total Int  0.468595    0.104041  22.202849 -0.0548  567.5587
-5                        Share  0.523275    0.080692  15.420526  0.0138  290.5717
-6              LT Post Consump  0.539296    0.110009  20.398674 -0.0220  374.8245
-7            LT Post Consumers  0.619451    0.139814  22.570608 -0.0426  129.1980
-8          LT Post Total Reach  0.652344    0.069950  10.722875 -0.0192  130.8781
-9                LT Engd Users  0.654193    0.091117  13.928139 -0.0031  166.8201
-10       LT People + Engd Post  0.671968    0.070316  10.464252  0.0715  152.2842
-11  LT Post Reach + Liked Page  0.684049    0.118140  17.270642  0.0757  136.3997
+            Performance metric      RMSE  SD (sigma)  Error (%)
+0     LT Post Imp + Liked Page  0.325887    0.085071  26.104556
+1                      Comment  0.446578    0.052661  11.792123
+2            LT Post Total Imp  0.465411    0.039590   8.506360
+3                         Like  0.492287    0.057554  11.691075
+4                    Total Int  0.504208    0.075536  14.981079
+5              LT Post Consump  0.524900    0.082303  15.679720
+6                        Share  0.562434    0.059426  10.565904
+7            LT Post Consumers  0.566388    0.068996  12.181747
+8                LT Engd Users  0.622991    0.057097   9.164958
+9          LT Post Total Reach  0.674833    0.066897   9.913174
+10       LT People + Engd Post  0.688563    0.083731  12.160295
+11  LT Post Reach + Liked Page  0.707609    0.065389   9.240866
 
 

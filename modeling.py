@@ -22,14 +22,21 @@ data_file = work_dir / 'data/dataset_Facebook.csv'
 data_prep = DataPreparation(data_file)
 fb_na_tr = data_prep.transform()
 
+# Comment on output columns:
+# With the OneHotEncoder class, the number of columns in the transformed matrix
+# is 57. The last 12 columns are the performance metrics which are used as labels
+# for modeling.
+
 
 # data modeling
 def cv_performance_model(model, threshold=3.0):
     cross_val_scores = []
     # 12 columns for preformance metrics
     num_metrics = fb_na_tr.shape[1]-1
+    # range from 56 (included) to 45 (included)
     for col in range(num_metrics, num_metrics-len(data_prep.output_columns), -1):
         clone_model = clone(model)
+        # range from 0 (included) to 44 (included), all categorical except for the last one
         X, y = fb_na_tr[:, 0:num_metrics-len(data_prep.output_columns)+1], fb_na_tr[:, col]
         X_thr, y_thr = X[(np.abs(y) < threshold)], y[(np.abs(y) < threshold)]
         scores = cross_val_score(clone_model, X_thr, y_thr, cv=5,

@@ -12,6 +12,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.svm import SVR
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
 
 home = os.environ['HOME']
 home_dir = Path(home)
@@ -64,9 +65,11 @@ def performance_model_table(model):
 
 
 # coef_ weights are only available with SVR(kernel='linear')
-model_list = {'Support Vector Machine Regressor': SVR(kernel='rbf'),
-              'Random Forest Regressor': RandomForestRegressor(random_state=42, n_jobs=-1),
+model_list = {'Support Vector Machine Regressor': SVR(kernel='rbf', C=0.1),
+              'Random Forest Regressor': RandomForestRegressor(n_estimators=200, random_state=42,
+                                                               n_jobs=-1),
               'Ridge': Ridge(random_state=42),
+              'XGBRegressor': XGBRegressor(n_estimators=200, random_state=42, n_jobs=-1),
               }
 
 # model calculation and saving output to file

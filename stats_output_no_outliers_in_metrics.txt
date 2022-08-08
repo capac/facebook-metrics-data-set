@@ -1,47 +1,17 @@
-Results for Support Vector Machine Regressor: 
-            Performance metric      RMSE  SD (sigma)  Error (%)
-0     LT Post Imp + Liked Page  0.308130    0.086331  28.017842
-1                      Comment  0.442906    0.068692  15.509296
-2            LT Post Total Imp  0.457882    0.050623  11.055936
-3                    Total Int  0.463549    0.107023  23.087659
-4                         Like  0.463698    0.088996  19.192685
-5              LT Post Consump  0.530852    0.085395  16.086340
-6                        Share  0.534954    0.087358  16.329936
-7            LT Post Consumers  0.612292    0.087960  14.365708
-8                LT Engd Users  0.659435    0.092686  14.055335
-9          LT Post Total Reach  0.663195    0.083403  12.576002
-10  LT Post Reach + Liked Page  0.714339    0.145652  20.389766
-11       LT People + Engd Post  0.714879    0.132223  18.495849
-
 Results for Random Forest Regressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)
-0   LT Post Reach + Liked Page  0.314992    0.088253  28.017555
-1            LT Post Consumers  0.465546    0.049045  10.534887
-2                LT Engd Users  0.487311    0.074086  15.203025
-3                        Share  0.498472    0.038759   7.775498
-4          LT Post Total Reach  0.510803    0.116143  22.737401
-5        LT People + Engd Post  0.523787    0.081954  15.646440
-6                      Comment  0.577828    0.083405  14.434288
-7            LT Post Total Imp  0.607289    0.140621  23.155494
-8                         Like  0.676636    0.137646  20.342743
-9              LT Post Consump  0.721368    0.084486  11.711887
-10                   Total Int  0.739320    0.075037  10.149425
-11    LT Post Imp + Liked Page  0.761854    0.093195  12.232686
-
-Results for Ridge: 
-            Performance metric      RMSE  SD (sigma)  Error (%)
-0     LT Post Imp + Liked Page  0.325887    0.085071  26.104556
-1                      Comment  0.446578    0.052661  11.792123
-2            LT Post Total Imp  0.465411    0.039590   8.506360
-3                         Like  0.492287    0.057554  11.691075
-4                    Total Int  0.504208    0.075536  14.981079
-5              LT Post Consump  0.524900    0.082303  15.679720
-6                        Share  0.562434    0.059426  10.565904
-7            LT Post Consumers  0.566388    0.068996  12.181747
-8                LT Engd Users  0.622991    0.057097   9.164958
-9          LT Post Total Reach  0.674833    0.066897   9.913174
-10       LT People + Engd Post  0.688563    0.083731  12.160295
-11  LT Post Reach + Liked Page  0.707609    0.065389   9.240866
+0     LT Post Imp + Liked Page  0.314992    0.088253  28.017555
+1                      Comment  0.465546    0.049045  10.534887
+2                         Like  0.487311    0.074086  15.203025
+3            LT Post Total Imp  0.498472    0.038759   7.775498
+4                    Total Int  0.510803    0.116143  22.737401
+5              LT Post Consump  0.523787    0.081954  15.646440
+6            LT Post Consumers  0.577828    0.083405  14.434288
+7                        Share  0.607289    0.140621  23.155494
+8                LT Engd Users  0.676636    0.137646  20.342743
+9        LT People + Engd Post  0.721368    0.084486  11.711887
+10         LT Post Total Reach  0.739320    0.075037  10.149425
+11  LT Post Reach + Liked Page  0.761854    0.093195  12.232686
 
 Results for XGBRegressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)
@@ -57,5 +27,35 @@ Results for XGBRegressor:
 9              LT Post Consump  0.814988    0.099951  12.264161
 10    LT Post Imp + Liked Page  0.844245    0.121302  14.368109
 11                   Total Int  0.862600    0.189134  21.926019
+
+Results for Support Vector Machine Regressor: 
+            Performance metric      RMSE  SD (sigma)  Error (%)
+0     LT Post Imp + Liked Page  0.306976    0.084175  27.420882
+1                      Comment  0.439472    0.066302  15.086643
+2            LT Post Total Imp  0.446834    0.043524   9.740551
+3                    Total Int  0.456152    0.098300  21.549868
+4                         Like  0.456710    0.082770  18.123103
+5              LT Post Consump  0.508479    0.077256  15.193451
+6                        Share  0.525325    0.080964  15.412197
+7            LT Post Consumers  0.570467    0.077707  13.621578
+8                LT Engd Users  0.624609    0.076201  12.199770
+9          LT Post Total Reach  0.640021    0.077566  12.119355
+10       LT People + Engd Post  0.667240    0.087844  13.165279
+11  LT Post Reach + Liked Page  0.681206    0.130327  19.131823
+
+Results for Ridge: 
+            Performance metric      RMSE  SD (sigma)  Error (%)
+0   LT Post Reach + Liked Page  0.325887    0.085071  26.104556
+1            LT Post Consumers  0.446578    0.052661  11.792123
+2                        Share  0.465411    0.039590   8.506360
+3                LT Engd Users  0.492287    0.057554  11.691075
+4          LT Post Total Reach  0.504208    0.075536  14.981079
+5        LT People + Engd Post  0.524900    0.082303  15.679720
+6            LT Post Total Imp  0.562434    0.059426  10.565904
+7                      Comment  0.566388    0.068996  12.181747
+8                         Like  0.622991    0.057097   9.164958
+9                    Total Int  0.674833    0.066897   9.913174
+10             LT Post Consump  0.688563    0.083731  12.160295
+11    LT Post Imp + Liked Page  0.707609    0.065389   9.240866
 
 

@@ -60,22 +60,27 @@ def performance_model_table(model):
     reg_df.reset_index(inplace=True)
     reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE',
                            'std': 'SD (sigma)', 'perc': 'Error (%)'}, inplace=True)
-    print(f'Time elapsed for {name}: {round(time() - t0, 2)} s.')
+    print(f'Time elapsed for {model.__class__.__name__}: {round(time() - t0, 2)} s.')
     return reg_df
 
 
 # coef_ weights are only available with SVR(kernel='linear')
-model_list = {'Support Vector Machine Regressor': SVR(kernel='rbf', C=0.1),
-              'Random Forest Regressor': RandomForestRegressor(n_estimators=200, random_state=42,
+model_list = {'Random Forest Regressor': RandomForestRegressor(n_estimators=200,
+                                                               random_state=42,
                                                                n_jobs=-1),
+              'XGBRegressor': XGBRegressor(n_estimators=200,
+                                           random_state=42,
+                                           eval_metric='rmse',
+                                           n_jobs=-1),
+              'Support Vector Machine Regressor': SVR(kernel='rbf', C=0.5),
               'Ridge': Ridge(random_state=42),
-              'XGBRegressor': XGBRegressor(n_estimators=200, random_state=42, n_jobs=-1),
               }
 
 # model calculation and saving output to file
 with open(work_dir / 'stats_output_no_outliers_in_metrics.txt', 'w') as f:
+    t1 = time()
     for name, model in model_list.items():
         results = performance_model_table(model)
         f.writelines(f'Results for {name}: \n{(results)}\n\n')
     f.writelines('\n')
-    print('Done!')
+    print(f'Total time elapsed: {round(time() - t1, 2)} s.')

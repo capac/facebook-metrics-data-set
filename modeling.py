@@ -51,7 +51,7 @@ class DataModeling():
             # removing outliers
             X_thr = X[(np.abs(y) < self.threshold)]
             y_thr = y[(np.abs(y) < self.threshold)]
-            scores = cross_val_score(clone_model, X_thr, y_thr, cv=5,
+            scores = cross_val_score(clone_model, X_thr, y_thr, cv=10, n_jobs=-1,
                                      scoring='neg_root_mean_squared_error')
             rmse_mean = -scores.mean()
             rmse_std = scores.std()

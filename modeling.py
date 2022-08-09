@@ -13,6 +13,7 @@ from sklearn.svm import SVR
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import SGDRegressor
+from sklearn.neighbors import KNeighborsRegressor
 from xgboost import XGBRegressor
 
 home = os.environ['HOME']
@@ -80,15 +81,16 @@ class DataModeling():
 
 # coef_ weights are only available with SVR(kernel='linear')
 model_list = {'Support Vector Machine Regressor': SVR(kernel='rbf', C=0.5),
+              'SGDRegressor': SGDRegressor(random_state=42),
               'Random Forest Regressor': RandomForestRegressor(n_estimators=200,
                                                                random_state=42,
                                                                n_jobs=-1),
               'Ridge': Ridge(random_state=42),
+              'KNeighborsRegressor': KNeighborsRegressor(),
               'XGBRegressor': XGBRegressor(n_estimators=200,
                                            random_state=42,
                                            eval_metric='rmse',
                                            n_jobs=-1),
-              'SGDRegressor': SGDRegressor(random_state=42),
               }
 
 # model calculation and saving output to file

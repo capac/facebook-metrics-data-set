@@ -58,4 +58,19 @@ Results for XGBRegressor:
 10  LT Post Reach + Liked Page  0.602180    0.039092   6.491693 -0.078646
 11       LT People + Engd Post  0.640591    0.090730  14.163547 -0.867382
 
+Results for SGDRegressor: 
+            Performance metric      RMSE  SD (sigma)  Error (%)        R2
+0     LT Post Imp + Liked Page  0.264883    0.067125  25.341412  0.010427
+1            LT Post Total Imp  0.330753    0.050224  15.184843  0.031040
+2                      Comment  0.358203    0.090509  25.267540 -0.095387
+3                         Like  0.407769    0.052486  12.871394 -0.050899
+4                    Total Int  0.407974    0.042263  10.359240 -0.055505
+5              LT Post Consump  0.427194    0.074490  17.436999  0.039912
+6                        Share  0.457802    0.066208  14.462198 -0.082518
+7          LT Post Total Reach  0.506096    0.077430  15.299522  0.027876
+8            LT Post Consumers  0.529735    0.083505  15.763504  0.005286
+9   LT Post Reach + Liked Page  0.541951    0.071470  13.187492  0.159049
+10               LT Engd Users  0.545211    0.086044  15.781693  0.036774
+11       LT People + Engd Post  0.564043    0.096066  17.031662 -0.102462
+
 

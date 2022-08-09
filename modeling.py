@@ -12,6 +12,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.svm import SVR
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import SGDRegressor
 from xgboost import XGBRegressor
 
 home = os.environ['HOME']
@@ -87,6 +88,7 @@ model_list = {'Support Vector Machine Regressor': SVR(kernel='rbf', C=0.5),
                                            random_state=42,
                                            eval_metric='rmse',
                                            n_jobs=-1),
+              'SGDRegressor': SGDRegressor(random_state=42),
               }
 
 # model calculation and saving output to file

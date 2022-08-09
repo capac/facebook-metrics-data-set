@@ -34,7 +34,7 @@ class DataModeling():
         self.data = data
         self.model = model
         self.threshold = threshold
-        # 12 preformance metrics columns, from last to first
+        # 12 performance metrics columns, from last to first
         self.perf_metric_cols = perf_metric_cols[::-1]
         # total number of columns
         self.tot_num_cols = self.data.shape[1]
@@ -53,12 +53,16 @@ class DataModeling():
             y_thr = y[(np.abs(y) < self.threshold)]
             scores = cross_val_score(clone_model, X_thr, y_thr, cv=10, n_jobs=-1,
                                      scoring='neg_root_mean_squared_error')
+            r2_scores = cross_val_score(clone_model, X_thr, y_thr, cv=10,
+                                        n_jobs=-1, scoring='r2')
+            r2_mean = r2_scores.mean()
             rmse_mean = -scores.mean()
             rmse_std = scores.std()
             err_perc = 100*rmse_std/rmse_mean
             cross_val_scores.append({'rmse': round(rmse_mean, 6),
                                      'std': round(rmse_std, 6),
-                                     'perc': round(err_perc, 6)})
+                                     'perc': round(err_perc, 6),
+                                     'r2': round(r2_mean, 6)})
         return cross_val_scores
 
     def perf_table(self):
@@ -68,7 +72,7 @@ class DataModeling():
         reg_df.sort_values(by='rmse', ascending=True, inplace=True)
         reg_df.reset_index(inplace=True)
         reg_df.rename(columns={'index': 'Performance metric', 'rmse': 'RMSE',
-                               'std': 'SD (sigma)', 'perc': 'Error (%)'}, inplace=True)
+                               'std': 'SD (sigma)', 'perc': 'Error (%)', 'r2': 'R2'}, inplace=True)
         print(f'Time elapsed for {model.__class__.__name__}: {round(time() - t0, 2)} s.')
         return reg_df
 

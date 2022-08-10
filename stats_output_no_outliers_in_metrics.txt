@@ -1,17 +1,17 @@
 Results for Support Vector Machine Regressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
-0     LT Post Imp + Liked Page  0.257751    0.062444  24.226685  0.059754
-1            LT Post Total Imp  0.325489    0.053830  16.538046  0.063950
-2                      Comment  0.356283    0.094468  26.514791 -0.076461
-3              LT Post Consump  0.398551    0.072300  18.140682  0.163729
-4                         Like  0.398925    0.062481  15.662477  0.003626
-5                    Total Int  0.399752    0.055171  13.801349 -0.004222
-6                        Share  0.448303    0.083633  18.655418 -0.022293
-7          LT Post Total Reach  0.498399    0.082598  16.572771  0.062646
-8            LT Post Consumers  0.512181    0.093274  18.211177  0.051774
-9                LT Engd Users  0.526062    0.078226  14.870026  0.091459
-10       LT People + Engd Post  0.531363    0.114644  21.575477  0.032118
-11  LT Post Reach + Liked Page  0.535830    0.061536  11.484201  0.174188
+0     LT Post Imp + Liked Page  0.256172    0.069708  27.211299  0.076658
+1            LT Post Total Imp  0.334913    0.053302  15.915194  0.008316
+2                      Comment  0.370797    0.095998  25.889804 -0.178294
+3              LT Post Consump  0.410591    0.073731  17.957273  0.098198
+4                    Total Int  0.419446    0.050746  12.098453 -0.115690
+5                         Like  0.423068    0.052619  12.437595 -0.140224
+6                        Share  0.461897    0.088986  19.265323 -0.081397
+7            LT Post Consumers  0.494378    0.068260  13.807296  0.103107
+8                LT Engd Users  0.516734    0.057770  11.179862  0.122416
+9          LT Post Total Reach  0.523680    0.088549  16.909035 -0.035439
+10       LT People + Engd Post  0.539748    0.101405  18.787501 -0.049494
+11  LT Post Reach + Liked Page  0.548352    0.070647  12.883589  0.136234
 
 Results for SGDRegressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
@@ -72,3 +72,5 @@ Results for KNeighborsRegressor:
 9                LT Engd Users  0.560878    0.079579  14.188255 -0.032833
 10       LT People + Engd Post  0.569227    0.078689  13.823838 -0.146655
 11  LT Post Reach + Liked Page  0.569353    0.075188  13.205866  0.060676
+
+

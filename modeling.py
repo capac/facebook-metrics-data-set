@@ -14,7 +14,6 @@ from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import SGDRegressor
 from sklearn.neighbors import KNeighborsRegressor
-from xgboost import XGBRegressor
 
 home = os.environ['HOME']
 home_dir = Path(home)
@@ -87,10 +86,6 @@ model_list = {'Support Vector Machine Regressor': SVR(kernel='rbf', C=0.5),
                                                                n_jobs=-1),
               'Ridge': Ridge(random_state=42),
               'KNeighborsRegressor': KNeighborsRegressor(),
-              'XGBRegressor': XGBRegressor(n_estimators=200,
-                                           random_state=42,
-                                           eval_metric='rmse',
-                                           n_jobs=-1),
               }
 
 # model calculation and saving output to file

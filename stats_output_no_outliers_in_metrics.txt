@@ -72,20 +72,3 @@ Results for KNeighborsRegressor:
 9                LT Engd Users  0.560878    0.079579  14.188255 -0.032833
 10       LT People + Engd Post  0.569227    0.078689  13.823838 -0.146655
 11  LT Post Reach + Liked Page  0.569353    0.075188  13.205866  0.060676
-
-Results for XGBRegressor: 
-            Performance metric      RMSE  SD (sigma)  Error (%)        R2
-0     LT Post Imp + Liked Page  0.301313    0.051059  16.945340 -0.383027
-1            LT Post Total Imp  0.396921    0.077116  19.428485 -0.491697
-2                      Comment  0.420150    0.090625  21.569635 -0.561237
-3              LT Post Consump  0.449272    0.079505  17.696418 -0.128086
-4                    Total Int  0.479394    0.093096  19.419531 -0.478000
-5                         Like  0.494053    0.103641  20.977683 -0.655402
-6            LT Post Consumers  0.530449    0.097219  18.327775 -0.058403
-7                        Share  0.543935    0.188986  34.744140 -0.553826
-8          LT Post Total Reach  0.575253    0.098067  17.047705 -0.264110
-9                LT Engd Users  0.591695    0.100324  16.955412 -0.192876
-10  LT Post Reach + Liked Page  0.602180    0.039092   6.491693 -0.078646
-11       LT People + Engd Post  0.640591    0.090730  14.163547 -0.867382
-
-

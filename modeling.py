@@ -85,14 +85,14 @@ model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=0.5),
                                                                random_state=42,
                                                                n_jobs=-1),
               'Ridge': Ridge(random_state=42),
-              'KNeighborsRegressor': KNeighborsRegressor(),
+              'KNeighborsRegressor': KNeighborsRegressor(n_jobs=-1),
               }
 
 # model calculation and saving output to file
 with open(work_dir / 'stats_output_no_outliers_in_metrics.txt', 'w') as f:
     t1 = time()
     for name, model in model_list.items():
-        data_metrics = DataModeling(fb_na_tr, model, data_prep.output_columns)
+        data_metrics = DataModeling(fb_na_tr[0], model, data_prep.output_columns)
         f.writelines(f'Results for {name}: \n{(data_metrics.perf_table())}\n\n')
     f.writelines('\n')
     print(f'Total time elapsed: {round(time() - t1, 2)} s.')

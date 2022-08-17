@@ -1,3 +1,0 @@
-Results for PCA: 
-Explained variance ratio: [0.33092086 0.17830812 0.1658041  0.15137296 0.11217275 0.05226967]
-

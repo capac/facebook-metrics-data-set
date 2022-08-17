@@ -87,4 +87,4 @@ class DataPreparation():
         ])
         # application for feature transformation pipeline
         input_fb_df = self.fb_df.copy()
-        return full_pipeline.fit_transform(input_fb_df), full_pipeline.get_feature_names_out()
+        return full_pipeline.fit_transform(input_fb_df)

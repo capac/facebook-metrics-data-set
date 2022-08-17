@@ -3,15 +3,11 @@
 import os
 from pathlib import Path
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, OrdinalEncoder
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
+from data_preparation import DataPreparation
 from sklearn.svm import SVR
-
-pd.set_option('display.max_colwidth', None)
 
 home = os.environ['HOME']
 home_dir = Path(home)
@@ -19,57 +15,25 @@ work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-me
 data_file = work_dir / 'data/dataset_Facebook.csv'
 
 # data preparation
-fb_df = pd.read_csv(data_file, sep=';')
-
-# column distinction
-selected_columns = list(fb_df.columns[0:15])
-input_columns = list(fb_df.columns[0:7])
-performance_columns = list(fb_df.columns[7:15])
-
-# column data type
-numeric_cols = [fb_df.columns[0]]
-cat_ordenc_cols = list(fb_df.columns[1:7])
-
-# rename the two categorical values in 'Type' and 'Category'
-# fb_df['Category'] = fb_df['Category'].replace([1, 2, 3], ['Category-1', 'Category-2', 'Category-3'])
-# fb_df['Paid'] = fb_df['Paid'].replace([0.0, 1.0], ['Not Paid', 'Paid'])
-
-num_pipeline = Pipeline([
-    ('imputer', SimpleImputer(strategy='median')),
-    ('min_max_scaler', StandardScaler())
-])
-
-full_pipeline = ColumnTransformer([
-    ('num', num_pipeline, numeric_cols),
-    ('cat_labelenc', OrdinalEncoder(), cat_ordenc_cols),
-])
-
-# drop NaNs from data frame
-selected_fb_df = fb_df[selected_columns].copy()
-selected_fb_df.dropna(inplace=True)
-
-# application of feature transformation pipeline
-fb_df_num_tr = full_pipeline.fit_transform(selected_fb_df)
-
-attrib_columns = numeric_cols + cat_ordenc_cols
-# print(f'attrib_columns: {attrib_columns}')
-# print(f'input_columns: {input_columns}')
+data_prep = DataPreparation(data_file)
+fb_na_tr = data_prep.transform()
 
 
-def feature_importances_plot(model, col, filename):
+def feature_importances_plot(model, col, filename, threshold=2.0):
     sns.set_context("talk")
-    X = fb_df_num_tr
-    y = selected_fb_df[col].values
-    model.fit(X, y)
-    # print(f'model.scores_: {model.scores_}')
-    sorted_features_df = pd.DataFrame({'contributing_features': model.coef_[0]},
-                                      index=attrib_columns).sort_values(by='contributing_features',
-                                                                        ascending=False)
-    # print(f'sorted_features_df:\n{sorted_features_df}')
-    # sorted_features_df = sorted_features_df.loc[~(sorted_features_df.index.isin([1, 2, 3]))]
+    # 12 columns for preformance metrics
+    diff_cols = fb_na_tr[0].shape[1] - len(data_prep.output_columns)
+    X = fb_na_tr[0][:, 0:diff_cols].copy()
+    y = fb_na_tr[0][:, col].copy()
+    X_thr = X[(np.abs(y) < threshold)]
+    y_thr = y[(np.abs(y) < threshold)]
+    model.fit(X_thr, y_thr)
+    features_df = pd.DataFrame({'contributing_features': model.coef_[0]},
+                               index=fb_na_tr[1][0:45])
+    sorted_features_df = features_df.sort_values(by='contributing_features', ascending=False)
     _, axes = plt.subplots(figsize=(14, 8))
     sns.barplot(data=sorted_features_df, x=sorted_features_df.index,
-                y=sorted_features_df['contributing_features'], palette='viridis',
+                y=sorted_features_df['contributing_features'], palette='Paired',
                 edgecolor='k', ax=axes)
     plt.setp(axes.get_xticklabels(), ha="right", rotation_mode="anchor", rotation=45, fontsize=14)
     plt.setp(axes.get_yticklabels(), fontsize=14)
@@ -81,24 +45,8 @@ def feature_importances_plot(model, col, filename):
     plt.savefig('plots/'+filename, dpi=288, bbox_inches='tight')
 
 
-svr = SVR(kernel='linear', C=1e3)
-# Feature importance plot, 'Lifetime People who have liked your Page and engaged with your post'
-feature_importances_plot(svr, performance_columns[-1], 'feature_importances_1.png')
-# Feature importance plot, 'Lifetime Post Consumers'
-feature_importances_plot(svr, performance_columns[3], 'feature_importances_2.png')
-
-
-def count_type_plot(col, filename):
-    _, axes = plt.subplots(figsize=(10, 8))
-    sns.barplot(data=fb_df, x='Type', y=col, palette='viridis', edgecolor='k', ax=axes)
-    plt.tight_layout()
-    axes.set_xticklabels(['Photo', 'Status', 'Link', 'Video'])
-    # ['Photo', 'Status', 'Link', 'Video'], [1, 2, 3, 4]
-    plt.grid(True, linestyle=':')
-    plt.savefig('plots/'+filename, dpi=288, bbox_inches='tight')
-
-
-# Count versus type plot, 'Lifetime People who have liked your Page and engaged with your post'
-count_type_plot(performance_columns[-1], 'plot_type_1.png')
-# Count versus type plot, ‘Lifetime Post Consumers'
-count_type_plot(performance_columns[3], 'plot_type_2.png')
+svr = SVR(kernel='linear', C=0.5)
+# Feature importance plot using 'Lifetime Post reach by people who like your Page' metric
+feature_importances_plot(svr, -7, 'feature_importances_1.png')
+# Feature importance plot using 'Lifetime Post Total Impressions' metric
+feature_importances_plot(svr, -11, 'feature_importances_2.png')

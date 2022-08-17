@@ -5,6 +5,8 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
+# category encoder class
+import category_encoders as ce
 
 
 class DataPreparation():
@@ -55,7 +57,7 @@ class DataPreparation():
         # numerical columns: all posts and performance metrics
         self.numeric_cols = [self.input_columns[0]] + self.output_columns
         # categorical columns: type, category, hour, month, day, paid
-        self.cat_onehot_cols = self.input_columns[1:7]
+        self.cat_cols = self.input_columns[1:7]
 
     def transform(self):
         # standardization of data
@@ -64,7 +66,22 @@ class DataPreparation():
         ])
         full_pipeline = ColumnTransformer([
             # 6 columns for categorical data
-            ('cat_onehot', OneHotEncoder(sparse=False, drop='first'), self.cat_onehot_cols),
+            ('cat_onehot', OneHotEncoder(sparse=False, drop='first'), self.cat_cols),
+            # 12 columns for numerical data
+            ('num', num_pipeline, self.numeric_cols),
+        ])
+        # application for feature transformation pipeline
+        input_fb_df = self.fb_df.copy()
+        return full_pipeline.fit_transform(input_fb_df), full_pipeline.get_feature_names_out()
+
+    def ce_transform(self):
+        # standardization of data
+        num_pipeline = Pipeline([
+            ('std_scaler', StandardScaler()),
+        ])
+        full_pipeline = ColumnTransformer([
+            # 6 columns for categorical data
+            ('cat_enc', ce.count.CountEncoder(normalize=True), self.cat_cols),
             # 12 columns for numerical data
             ('num', num_pipeline, self.numeric_cols),
         ])

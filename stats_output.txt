@@ -9,7 +9,7 @@ Results for Support Vector Machine Regressor:
 6                        Share  0.461897    0.088986  19.265323 -0.081397
 7            LT Post Consumers  0.494378    0.068260  13.807296  0.103107
 8                LT Engd Users  0.516734    0.057770  11.179862  0.122416
-9          LT Post Total Reach  0.523727    0.088488  16.895769 -0.035642
+9          LT Post Total Reach  0.523680    0.088549  16.909035 -0.035439
 10       LT People + Engd Post  0.539748    0.101405  18.787501 -0.049494
 11  LT Post Reach + Liked Page  0.548352    0.070647  12.883589  0.136234
 
@@ -60,17 +60,17 @@ Results for Ridge:
 
 Results for KNeighborsRegressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
-0     LT Post Imp + Liked Page  0.287698    0.045247  15.727393 -0.227414
-1            LT Post Total Imp  0.365577    0.042446  11.610648 -0.203493
-2                      Comment  0.384634    0.090209  23.453321 -0.308073
-3                         Like  0.433473    0.033712   7.777154 -0.217594
-4                    Total Int  0.434448    0.044264  10.188542 -0.212050
-5              LT Post Consump  0.445795    0.079875  17.917315 -0.048569
-6                        Share  0.508197    0.090117  17.732663 -0.347307
-7          LT Post Total Reach  0.529748    0.067230  12.691022 -0.074048
-8            LT Post Consumers  0.538778    0.085476  15.864762 -0.044573
-9                LT Engd Users  0.558473    0.079068  14.157959 -0.023887
-10       LT People + Engd Post  0.568735    0.079242  13.933068 -0.145209
-11  LT Post Reach + Liked Page  0.569353    0.075188  13.205865  0.060676
+0     LT Post Imp + Liked Page  0.287956    0.044979  15.620213 -0.229940
+1            LT Post Total Imp  0.365547    0.042649  11.667036 -0.203574
+2                      Comment  0.384210    0.090180  23.471456 -0.305783
+3                         Like  0.434657    0.034631   7.967404 -0.223411
+4                    Total Int  0.435545    0.044796  10.285027 -0.217137
+5              LT Post Consump  0.445845    0.080121  17.970576 -0.048528
+6                        Share  0.508161    0.090148  17.740030 -0.347132
+7          LT Post Total Reach  0.529757    0.067231  12.690924 -0.074083
+8            LT Post Consumers  0.538791    0.085474  15.864115 -0.044627
+9                LT Engd Users  0.560878    0.079579  14.188255 -0.032833
+10       LT People + Engd Post  0.569227    0.078689  13.823838 -0.146655
+11  LT Post Reach + Liked Page  0.569353    0.075188  13.205866  0.060676
 
 

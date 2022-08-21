@@ -64,7 +64,7 @@ class DataPreparation():
         ])
         full_pipeline = ColumnTransformer([
             # 6 columns for categorical data
-            ('cat_onehot', OneHotEncoder(sparse=False, drop='first'), self.cat_cols),
+            ('cat_onehot', OneHotEncoder(sparse=False, drop=None), self.cat_cols),
             # 12 columns for numerical data
             ('num', num_pipeline, self.numeric_cols),
         ])

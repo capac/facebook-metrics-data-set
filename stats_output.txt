@@ -15,33 +15,33 @@ Results for Support Vector Machine Regressor:
 
 Results for SGDRegressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
-0     LT Post Imp + Liked Page  0.265248    0.065928  24.855171  0.002197
-1            LT Post Total Imp  0.329852    0.050494  15.308053  0.035383
-2                      Comment  0.357033    0.091848  25.725226 -0.082140
-3                         Like  0.403922    0.054260  13.433277 -0.026697
-4                    Total Int  0.404346    0.047698  11.796346 -0.029655
-5              LT Post Consump  0.419929    0.072578  17.283361  0.071829
-6                        Share  0.450783    0.069943  15.515836 -0.042613
-7          LT Post Total Reach  0.507396    0.077292  15.233035  0.019482
-8            LT Post Consumers  0.520218    0.079350  15.253203  0.038076
-9                LT Engd Users  0.535361    0.083425  15.582880  0.069727
-10  LT Post Reach + Liked Page  0.541982    0.074287  13.706567  0.158036
-11       LT People + Engd Post  0.552401    0.098268  17.789170 -0.051112
+0     LT Post Imp + Liked Page  0.265232    0.066007  24.886449  0.002561
+1            LT Post Total Imp  0.329858    0.050478  15.302959  0.035357
+2                      Comment  0.356958    0.091849  25.730985 -0.081689
+3                         Like  0.403881    0.054274  13.438110 -0.026460
+4                    Total Int  0.404325    0.047715  11.801058 -0.029532
+5              LT Post Consump  0.419916    0.072491  17.263302  0.071851
+6                        Share  0.450818    0.069896  15.504296 -0.042821
+7          LT Post Total Reach  0.507373    0.077267  15.228915  0.019586
+8            LT Post Consumers  0.520247    0.079410  15.263853  0.038067
+9                LT Engd Users  0.535337    0.083379  15.575135  0.069864
+10  LT Post Reach + Liked Page  0.542064    0.074353  13.716664  0.157827
+11       LT People + Engd Post  0.552280    0.098267  17.792900 -0.050446
 
-Results for Random Forest Regressor: 
+Results for Lasso: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
-0     LT Post Imp + Liked Page  0.276364    0.052995  19.175860 -0.143398
-1            LT Post Total Imp  0.350950    0.058974  16.804097 -0.102595
-2                      Comment  0.377203    0.090367  23.957081 -0.226693
-3              LT Post Consump  0.412882    0.074510  18.046261  0.083495
-4                    Total Int  0.413237    0.042968  10.397823 -0.088407
-5                         Like  0.426007    0.042526   9.982427 -0.168587
-6                        Share  0.495260    0.153464  30.986503 -0.288129
-7            LT Post Consumers  0.499494    0.069907  13.995521  0.093528
-8                LT Engd Users  0.519845    0.068111  13.102253  0.110428
-9          LT Post Total Reach  0.520591    0.080487  15.460602 -0.033152
-10       LT People + Engd Post  0.538009    0.076405  14.201376 -0.058788
-11  LT Post Reach + Liked Page  0.553542    0.068293  12.337390  0.108067
+0     LT Post Imp + Liked Page  0.270360    0.069195  25.593448 -0.027601
+1            LT Post Total Imp  0.338943    0.053027  15.644872 -0.014879
+2                      Comment  0.355560    0.090574  25.473711 -0.086685
+3                         Like  0.410865    0.053587  13.042443 -0.063913
+4                    Total Int  0.411563    0.045377  11.025398 -0.071706
+5              LT Post Consump  0.458080    0.076081  16.608587 -0.106580
+6                        Share  0.465749    0.073890  15.864825 -0.113912
+7          LT Post Total Reach  0.519069    0.069712  13.430287 -0.024628
+8        LT People + Engd Post  0.568841    0.127714  22.451656 -0.074570
+9            LT Post Consumers  0.579552    0.098349  16.969872 -0.186130
+10               LT Engd Users  0.590879    0.090037  15.237896 -0.120750
+11  LT Post Reach + Liked Page  0.597348    0.081642  13.667434 -0.015127
 
 Results for Ridge: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
@@ -58,19 +58,19 @@ Results for Ridge:
 10  LT Post Reach + Liked Page  0.542131    0.072569  13.385883  0.151245
 11       LT People + Engd Post  0.553042    0.104317  18.862349 -0.111975
 
-Results for KNeighborsRegressor: 
+Results for Random Forest Regressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
-0     LT Post Imp + Liked Page  0.288414    0.064467  22.352088 -0.200477
-1            LT Post Total Imp  0.355319    0.046832  13.180198 -0.146167
-2                      Comment  0.383852    0.087779  22.867836 -0.288169
-3                    Total Int  0.429231    0.040515   9.438997 -0.175625
-4                         Like  0.437761    0.041403   9.458008 -0.227972
-5              LT Post Consump  0.438913    0.079680  18.153903 -0.021329
-6                        Share  0.496132    0.098163  19.785678 -0.256002
-7          LT Post Total Reach  0.520804    0.076834  14.753001 -0.052629
-8            LT Post Consumers  0.541450    0.074129  13.690793 -0.057859
-9                LT Engd Users  0.553986    0.074098  13.375428 -0.001584
-10       LT People + Engd Post  0.567171    0.085180  15.018377 -0.134044
-11  LT Post Reach + Liked Page  0.576007    0.082087  14.250998  0.041369
+0     LT Post Imp + Liked Page  0.276364    0.052995  19.175860 -0.143398
+1            LT Post Total Imp  0.350950    0.058974  16.804097 -0.102595
+2                      Comment  0.377203    0.090367  23.957081 -0.226693
+3              LT Post Consump  0.412882    0.074510  18.046261  0.083495
+4                    Total Int  0.413237    0.042968  10.397823 -0.088407
+5                         Like  0.426007    0.042526   9.982427 -0.168587
+6                        Share  0.495260    0.153464  30.986503 -0.288129
+7            LT Post Consumers  0.499494    0.069907  13.995521  0.093528
+8                LT Engd Users  0.519845    0.068111  13.102253  0.110428
+9          LT Post Total Reach  0.520591    0.080487  15.460602 -0.033152
+10       LT People + Engd Post  0.538009    0.076405  14.201376 -0.058788
+11  LT Post Reach + Liked Page  0.553542    0.068293  12.337390  0.108067
 
 

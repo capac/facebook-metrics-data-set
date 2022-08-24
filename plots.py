@@ -20,11 +20,10 @@ fb_na_tr = data_prep.transform()
 
 
 class FeatureRevelance():
-    def __init__(self, data, model, perf_metric, threshold=2.0, top=None):
+    def __init__(self, data, model, perf_metric, threshold=2.0):
         self.data = data
         self.model = model
         self.perf_metric = perf_metric
-        self.top = top
 
         diff_cols = self.data[0].shape[1] - len(data_prep.output_columns)
 
@@ -51,8 +50,7 @@ class FeatureRevelance():
         plt.setp(axes.get_yticklabels(), fontsize=14)
         axes.set_xlabel('Input Features', fontsize=14)
         axes.set_ylabel('Contributing Features', fontsize=14)
-        axes.set_title(f'Input Features vs {self.top} Most Contributing Features in SVR',
-                       fontsize=16)
+        axes.set_title('Input Features vs Most Contributing Features in SVR', fontsize=16)
         plt.tight_layout()
         plt.grid(True, linestyle=':')
         plt.savefig('plots/'+filename, dpi=288, bbox_inches='tight')

@@ -80,7 +80,7 @@ class DataModeling():
 
 # coef_ weights are only available with SVR(kernel='linear')
 model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=0.5),
-              'SGDRegressor': SGDRegressor(penalty='l1', random_state=42),
+              'SGDRegressor': SGDRegressor(random_state=42),
               'Lasso': Lasso(random_state=42),
               'Ridge': Ridge(random_state=42),
               'Random Forest Regressor': RandomForestRegressor(n_estimators=200,

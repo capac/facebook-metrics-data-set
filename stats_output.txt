@@ -15,18 +15,18 @@ Results for Support Vector Machine Regressor:
 
 Results for SGDRegressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
-0     LT Post Imp + Liked Page  0.265232    0.066007  24.886449  0.002561
-1            LT Post Total Imp  0.329858    0.050478  15.302959  0.035357
-2                      Comment  0.356958    0.091849  25.730985 -0.081689
-3                         Like  0.403881    0.054274  13.438110 -0.026460
-4                    Total Int  0.404325    0.047715  11.801058 -0.029532
-5              LT Post Consump  0.419916    0.072491  17.263302  0.071851
-6                        Share  0.450818    0.069896  15.504296 -0.042821
-7          LT Post Total Reach  0.507373    0.077267  15.228915  0.019586
-8            LT Post Consumers  0.520247    0.079410  15.263853  0.038067
-9                LT Engd Users  0.535337    0.083379  15.575135  0.069864
-10  LT Post Reach + Liked Page  0.542064    0.074353  13.716664  0.157827
-11       LT People + Engd Post  0.552280    0.098267  17.792900 -0.050446
+0     LT Post Imp + Liked Page  0.265248    0.065928  24.855171  0.002197
+1            LT Post Total Imp  0.329852    0.050494  15.308053  0.035383
+2                      Comment  0.357033    0.091848  25.725226 -0.082140
+3                         Like  0.403922    0.054260  13.433277 -0.026697
+4                    Total Int  0.404346    0.047698  11.796346 -0.029655
+5              LT Post Consump  0.419929    0.072578  17.283361  0.071829
+6                        Share  0.450783    0.069943  15.515836 -0.042613
+7          LT Post Total Reach  0.507396    0.077292  15.233035  0.019482
+8            LT Post Consumers  0.520218    0.079350  15.253203  0.038076
+9                LT Engd Users  0.535361    0.083425  15.582880  0.069727
+10  LT Post Reach + Liked Page  0.541982    0.074287  13.706567  0.158036
+11       LT People + Engd Post  0.552401    0.098268  17.789170 -0.051112
 
 Results for Lasso: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2

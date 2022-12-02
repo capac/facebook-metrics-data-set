@@ -2,7 +2,7 @@
 
 import pandas as pd
 # Scikit-Learn preprocessing classes
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OrdinalEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 
@@ -66,10 +66,10 @@ class DataPreparation():
         ])
         full_pipeline = ColumnTransformer([
             # 6 columns for categorical data
-            ('cat_onehot', OneHotEncoder(sparse=False, drop=None), self.cat_cols),
+            ('ord_enc', OrdinalEncoder(), self.cat_cols),
             # 12 columns for numerical data
             ('num', num_pipeline, self.numeric_cols),
         ])
         # application for feature transformation pipeline
         input_fb_df = self.fb_df.copy()
-        return full_pipeline.fit_transform(input_fb_df), full_pipeline.get_feature_names_out()
+        return full_pipeline.fit_transform(input_fb_df)

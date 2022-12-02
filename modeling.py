@@ -92,7 +92,7 @@ model_list = {'Support Vector Machine Regressor': SVR(kernel='linear', C=0.5),
 with open(work_dir / 'stats_output.txt', 'w') as f:
     t1 = time()
     for name, model in model_list.items():
-        data_metrics = DataModeling(fb_na_tr[0], model, data_prep.output_columns)
+        data_metrics = DataModeling(fb_na_tr, model, data_prep.output_columns)
         f.writelines(f'Results for {name}: \n{(data_metrics.perf_table())}\n\n')
     f.writelines('\n')
     print(f'Total time elapsed: {round(time() - t1, 2)} s.')

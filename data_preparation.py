@@ -14,7 +14,7 @@ class DataPreparation():
         self.data_file = data_file
         self.fb_df = pd.read_csv(self.data_file, sep=';', na_values='NaN')
 
-        # shorten column names
+        # shortened column names
         self.fb_df.rename(columns={
                           'Lifetime Post Total Reach':
                           'LT Post Total Reach',
@@ -48,10 +48,12 @@ class DataPreparation():
         self.fb_df.fillna(value=self.fb_df['Like'].median(), inplace=True)
         # fill NaN of 'share' column with median
         self.fb_df.fillna(value=self.fb_df['Share'].median(), inplace=True)
+
         # input columns
         self.input_columns = self.fb_df.columns[0:7].tolist()
         # output columns
         self.output_columns = self.fb_df.columns[7:19].tolist()
+
         # numerical columns: all posts and performance metrics
         self.numeric_cols = [self.input_columns[0]] + self.output_columns
         # categorical columns: type, category, hour, month, day, paid

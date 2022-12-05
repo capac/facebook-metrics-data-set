@@ -2,7 +2,7 @@
 
 import pandas as pd
 # Scikit-Learn preprocessing classes
-from sklearn.preprocessing import StandardScaler, OrdinalEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 
@@ -12,7 +12,7 @@ class DataPreparation():
 
     def __init__(self, data_file):
         self.data_file = data_file
-        self.fb_df = pd.read_csv(self.data_file, sep=';', na_values='NaN')
+        self.fb_df = pd.read_csv(self.data_file, sep=',', na_values='NaN')
 
         # shortened column names
         self.fb_df.rename(columns={
@@ -55,9 +55,9 @@ class DataPreparation():
         self.output_columns = self.fb_df.columns[7:19].tolist()
 
         # numerical columns: all posts and performance metrics
-        self.numeric_cols = [self.input_columns[0]] + self.output_columns
-        # categorical columns: type, category, hour, month, day, paid
-        self.cat_cols = self.input_columns[1:7]
+        self.numeric_cols = [self.input_columns[0]] + self.input_columns[3:6] + self.output_columns
+        # categorical columns: type, category, paid
+        self.cat_cols = self.input_columns[1:3] + [self.input_columns[6]]
 
     def transform(self):
         # standardization of data
@@ -66,7 +66,7 @@ class DataPreparation():
         ])
         full_pipeline = ColumnTransformer([
             # 6 columns for categorical data
-            ('ord_enc', OrdinalEncoder(), self.cat_cols),
+            ('ord_enc', OneHotEncoder(sparse=False, drop='first'), self.cat_cols),
             # 12 columns for numerical data
             ('num', num_pipeline, self.numeric_cols),
         ])

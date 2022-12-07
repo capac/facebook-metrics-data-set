@@ -27,7 +27,7 @@ fb_na_tr = data_prep.transform()
 # data modeling
 class DataModeling():
     '''
-    With the OneHotEncoder class, the number of columns in the transformed matrix is 57.
+    With the OneHotEncoder class, the number of columns in the transformed matrix is 22.
     The last 12 columns are the performance metrics which are used as labels for modeling.
     '''
     def __init__(self, data, model, perf_metric_cols, threshold=2.0):

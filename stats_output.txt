@@ -1,4 +1,4 @@
-Results for Support Vector Machine Regressor: 
+Results for Support Vector Regressor: 
             Performance metric      RMSE  SD (sigma)  Error (%)        R2
 0     LT Post Imp + Liked Page  0.262178    0.073528  28.045092  0.039442
 1            LT Post Total Imp  0.340769    0.060444  17.737563 -0.020880

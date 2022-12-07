@@ -36,20 +36,20 @@ class DataModeling():
         self.threshold = threshold
         # 12 performance metrics columns, from last to first
         self.perf_metric_cols = perf_metric_cols[::-1]
-        # total number of columns: 57
+        # total number of columns: 22
         self.tot_num_cols = self.data.shape[1]
-        # 57 - 12 = 45
+        # 22 - 12 = 10
         self.diff_cols = self.tot_num_cols - len(self.perf_metric_cols)
 
     def _cal_perf_metrics(self):
         cross_val_scores = []
-        # range from 56 (included) to 45 (included)
+        # range from 22 (included) to 11 (included)
         for col in range(self.tot_num_cols-1, self.diff_cols-1, -1):
-            # range from 0 (included) to 44 (included), all categorical except for the last one
+            # range from 0 (included) to 11 (included)
             X = self.data[:, 0:self.diff_cols].copy()
             y = self.data[:, col].copy()
             clone_model = clone(self.model)
-            # removing outliers
+            # removing outliers for performance metrics
             X_thr = X[(np.abs(y) < self.threshold)]
             y_thr = y[(np.abs(y) < self.threshold)]
             scores = cross_val_score(clone_model, X_thr, y_thr, cv=10, n_jobs=-1,

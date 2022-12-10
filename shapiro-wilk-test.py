@@ -1,12 +1,10 @@
 #! /usr/bin/env python3
 
-import os
 from pathlib import Path
 from data_preparation import DataPreparation
 from scipy.stats import shapiro
 
-home = os.environ['HOME']
-home_dir = Path(home)
+home_dir = Path.home()
 work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-metrics-data-set'
 data_file = work_dir / 'data/dataset_Facebook.csv'
 

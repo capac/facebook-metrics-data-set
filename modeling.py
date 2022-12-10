@@ -1,6 +1,5 @@
 #! /usr/bin/env python3
 
-import os
 from pathlib import Path
 import pandas as pd
 import numpy as np
@@ -14,8 +13,7 @@ from sklearn.linear_model import Ridge, Lasso
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import SGDRegressor
 
-home = os.environ['HOME']
-home_dir = Path(home)
+home_dir = Path.home()
 work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-metrics-data-set'
 data_file = work_dir / 'data/dataset_Facebook.csv'
 

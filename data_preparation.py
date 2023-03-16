@@ -49,26 +49,29 @@ class DataPreparation():
         # fill NaN of 'share' column with median
         self.fb_df.fillna(value=self.fb_df['Share'].median(), inplace=True)
 
-        # input columns
+        # input columns (7)
         self.input_columns = self.fb_df.columns[0:7].tolist()
-        # output columns
+        # output columns (12)
         self.output_columns = self.fb_df.columns[7:19].tolist()
 
-        # numerical columns: page total likes and all performance metrics
+        # numerical columns: page total likes (1) and all performance metrics (12)
         self.numeric_cols = [self.input_columns[0]] + self.output_columns
-        # categorical columns: type, category, post month, post weekday, post hour, paid
-        self.cat_cols = self.input_columns[1:6] + [self.input_columns[6]]
+        # categorical columns: type, category, post month, post weekday, post hour, paid (6)
+        self.cat_cols = self.input_columns[1:]
 
     def transform(self):
         # standardization of data
         num_pipeline = Pipeline([
             ('std_scaler', StandardScaler()),
         ])
+        cat_pipeline = Pipeline([
+            ('ord_enc', OneHotEncoder(sparse_output=False, drop='first')),
+        ])
         full_pipeline = ColumnTransformer([
-            # 6 columns for categorical data
-            ('ord_enc', OneHotEncoder(sparse=False, drop='first'), self.cat_cols),
-            # 12 columns for numerical data
+            # 13 columns of numerical data
             ('num', num_pipeline, self.numeric_cols),
+            # 6 columns of categorical data
+            ('cat', cat_pipeline, self.cat_cols),
         ])
         # application for feature transformation pipeline
         input_fb_df = self.fb_df.copy()

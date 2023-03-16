@@ -5,7 +5,7 @@ from data_preparation import DataPreparation
 from scipy.stats import shapiro
 
 home_dir = Path.home()
-work_dir = home_dir / 'Programming/Python/machine-learning-exercises/facebook-metrics-data-set'
+work_dir = home_dir / 'Programming/Python/machine-learning-exercises/uci-ml-repository/facebook-metrics-data-set'
 data_file = work_dir / 'data/dataset_Facebook.csv'
 
 # data preparation

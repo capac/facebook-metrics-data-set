@@ -68,10 +68,10 @@ class DataPreparation():
             ('ord_enc', OneHotEncoder(sparse_output=False, drop='first')),
         ])
         full_pipeline = ColumnTransformer([
-            # 13 columns of numerical data
-            ('num', num_pipeline, self.numeric_cols),
             # 6 columns of categorical data
             ('cat', cat_pipeline, self.cat_cols),
+            # 13 columns of numerical data
+            ('num', num_pipeline, self.numeric_cols),
         ])
         # application for feature transformation pipeline
         input_fb_df = self.fb_df.copy()

@@ -49,5 +49,4 @@ class DataPreparation():
             ('num', num_pipeline, self.numeric_cols),
         ])
         # application for feature transformation pipeline
-        input_fb_df = self.fb_df.copy()
-        return full_pipeline.fit_transform(input_fb_df)
+        return full_pipeline.fit_transform(self.fb_df)

@@ -10,37 +10,12 @@ from sklearn.compose import ColumnTransformer
 class DataPreparation():
     '''data preparation class'''
 
-    def __init__(self, data_file):
+    def __init__(self, data_file, columns=None):
         self.data_file = data_file
         self.fb_df = pd.read_csv(self.data_file, sep=',', na_values='NaN')
 
         # shortened column names
-        self.fb_df.rename(columns={
-                          'Lifetime Post Total Reach':
-                          'LT Post Total Reach',
-                          'Lifetime Post Total Impressions':
-                          'LT Post Total Imp',
-                          'Lifetime Engaged Users':
-                          'LT Engd Users',
-                          'Lifetime Post Consumers':
-                          'LT Post Consumers',
-                          'Lifetime Post Consumptions':
-                          'LT Post Consump',
-                          'Lifetime Post Impressions by people who have liked your Page':
-                          'LT Post Imp + Liked Page',
-                          'Lifetime Post reach by people who like your Page':
-                          'LT Post Reach + Liked Page',
-                          'Lifetime People who have liked your Page and engaged with your post':
-                          'LT People + Engd Post',
-                          'comment':
-                          'Comment',
-                          'like':
-                          'Like',
-                          'share':
-                          'Share',
-                          'Total Interactions':
-                          'Total Int'
-                          }, inplace=True)
+        self.fb_df.rename(columns=columns, inplace=True)
 
         # fill NaN of 'Paid' column with mode
         self.fb_df.fillna(value=self.fb_df['Paid'].mode().values[0], inplace=True)

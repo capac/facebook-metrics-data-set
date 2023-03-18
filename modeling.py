@@ -18,7 +18,21 @@ work_dir = home_dir / 'Programming/Python/machine-learning-exercises/uci-ml-repo
 data_file = work_dir / 'data/dataset_Facebook.csv'
 
 # data preparation
-data_prep = DataPreparation(data_file)
+modified_cols = {'Lifetime Post Total Reach': 'LT Post Total Reach',
+                 'Lifetime Post Total Impressions': 'LT Post Total Imp',
+                 'Lifetime Engaged Users': 'LT Engd Users',
+                 'Lifetime Post Consumers': 'LT Post Consumers',
+                 'Lifetime Post Consumptions': 'LT Post Consump',
+                 'Lifetime Post Impressions by people who have liked your Page': 'LT Post Imp + Liked Page',
+                 'Lifetime Post reach by people who like your Page': 'LT Post Reach + Liked Page',
+                 'Lifetime People who have liked your Page and engaged with your post': 'LT People + Engd Post',
+                 'comment': 'Comment',
+                 'like': 'Like',
+                 'share': 'Share',
+                 'Total Interactions': 'Total Int'
+                 }
+
+data_prep = DataPreparation(data_file, columns=modified_cols)
 fb_na_tr = data_prep.transform()
 
 

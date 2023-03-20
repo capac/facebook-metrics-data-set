@@ -3,7 +3,7 @@
 import pandas as pd
 # Scikit-Learn preprocessing classes
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import make_pipeline
 from sklearn.compose import ColumnTransformer
 
 
@@ -39,18 +39,15 @@ class DataPreparation():
 
     def transform(self):
         # standardization of data
-        num_pipeline = Pipeline([
-            ('std_scaler', StandardScaler()),
-        ])
-        cat_pipeline = Pipeline([
-            ('ord_enc', OneHotEncoder(sparse_output=False, drop='first')),
-        ])
+        num_pipeline = make_pipeline(StandardScaler())
+        cat_pipeline = make_pipeline(OneHotEncoder(sparse_output=False, drop='first'))
+
         full_pipeline = ColumnTransformer([
             # 6 columns of categorical data
             ('cat', cat_pipeline, self.cat_cols),
             # 13 columns of numerical data
             ('num', num_pipeline, self.numeric_cols),
-        ])
+        ], verbose_feature_names_out=False)
         # pipeline for feature transformations; returns NumPy
         # array which will be transformed into a dataframe
-        return full_pipeline.fit_transform(self.fb_df)
+        return full_pipeline.fit_transform(self.fb_df), full_pipeline.get_feature_names_out()

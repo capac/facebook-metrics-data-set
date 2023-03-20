@@ -12,7 +12,10 @@ class DataPreparation():
 
     def __init__(self, data_file, columns=None):
         self.data_file = data_file
-        self.fb_df = pd.read_csv(self.data_file, sep=',', na_values='NaN')
+        self.fb_df = pd.read_csv(self.data_file, sep=',', na_values='NaN',
+                                 dtype={'Category': 'object', 'Paid': 'object',
+                                        'Post Month': 'object', 'Post Weekday': 'object',
+                                        'Post Hour': 'object'})
 
         # shortened column names
         self.fb_df.rename(columns=columns, inplace=True)
@@ -20,9 +23,9 @@ class DataPreparation():
         # fill NaN of 'Paid' column with mode
         self.fb_df.fillna(value=self.fb_df['Paid'].mode().values[0], inplace=True)
         # fill NaN of 'like' column with median
-        self.fb_df.fillna(value=self.fb_df['Like'].median(), inplace=True)
+        self.fb_df.fillna(value=self.fb_df['like'].median(), inplace=True)
         # fill NaN of 'share' column with median
-        self.fb_df.fillna(value=self.fb_df['Share'].median(), inplace=True)
+        self.fb_df.fillna(value=self.fb_df['share'].median(), inplace=True)
 
         # input columns (7)
         self.input_columns = self.fb_df.columns[0:7].tolist()
@@ -48,5 +51,6 @@ class DataPreparation():
             # 13 columns of numerical data
             ('num', num_pipeline, self.numeric_cols),
         ])
-        # application for feature transformation pipeline
+        # pipeline for feature transformations; returns NumPy
+        # array which will be transformed into a dataframe
         return full_pipeline.fit_transform(self.fb_df)

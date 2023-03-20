@@ -23,9 +23,9 @@ class DataPreparation():
         # fill NaN of 'Paid' column with mode
         self.fb_df.fillna(value=self.fb_df['Paid'].mode().values[0], inplace=True)
         # fill NaN of 'like' column with median
-        self.fb_df.fillna(value=self.fb_df['like'].median(), inplace=True)
+        self.fb_df.fillna(value=self.fb_df['Like'].median(), inplace=True)
         # fill NaN of 'share' column with median
-        self.fb_df.fillna(value=self.fb_df['share'].median(), inplace=True)
+        self.fb_df.fillna(value=self.fb_df['Share'].median(), inplace=True)
 
         # input columns (7)
         self.input_columns = self.fb_df.columns[0:7].tolist()

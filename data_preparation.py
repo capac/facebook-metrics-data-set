@@ -10,15 +10,12 @@ from sklearn.compose import ColumnTransformer
 class DataPreparation():
     '''data preparation class'''
 
-    def __init__(self, data_file, columns=None):
+    def __init__(self, data_file):
         self.data_file = data_file
         self.fb_df = pd.read_csv(self.data_file, sep=',', na_values='NaN',
                                  dtype={'Category': 'object', 'Paid': 'object',
                                         'Post Month': 'object', 'Post Weekday': 'object',
                                         'Post Hour': 'object'})
-
-        # shortened column names
-        self.fb_df.rename(columns=columns, inplace=True)
 
         # fill NaN of 'Paid' column with mode
         self.fb_df.fillna(value=self.fb_df['Paid'].mode().values[0], inplace=True)

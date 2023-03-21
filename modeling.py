@@ -32,8 +32,10 @@ modified_cols = {'Lifetime Post Total Reach': 'LT Post Total Reach',
                  'Total Interactions': 'Total Int'
                  }
 
-data_prep = DataPreparation(data_file, columns=modified_cols)
+data_prep = DataPreparation(data_file)
+# the NumPy array has categorical and numerical (13) columns
 fb_na_tr = data_prep.transform()
+fb_mod_df = pd.DataFrame(fb_na_tr[0], columns=fb_na_tr[1])
 
 
 # data modeling
@@ -42,28 +44,26 @@ class DataModeling():
     With the OneHotEncoder class, the number of columns in the transformed matrix is 22.
     The last 12 columns are the performance metrics which are used as labels for modeling.
     '''
-    def __init__(self, data, model, perf_metric_cols, threshold=2.0):
-        self.data = data
+    def __init__(self, data_frame, model, threshold=2.0):
+        self.data_frame = data_frame
         self.model = model
         self.threshold = threshold
-        # 12 performance metrics columns, from last to first
-        self.perf_metric_cols = perf_metric_cols[::-1]
-        # total number of columns: 22
-        self.tot_num_cols = self.data.shape[1]
-        # 22 - 12 = 10
-        self.diff_cols = self.tot_num_cols - len(self.perf_metric_cols)
+        # 12 performance metrics columns
+        self.perf_metric_cols = self.data_frame.columns[-12:].tolist()
+        # modeling columns: total columns - 12 performance metrics columns
+        self.modeling_cols = list(set(self.data_frame.columns.tolist()) - set(self.perf_metric_cols))
 
     def _cal_perf_metrics(self):
         cross_val_scores = []
-        # range from 22 (included) to 11 (included)
-        for col in range(self.tot_num_cols-1, self.diff_cols-1, -1):
-            # range from 0 (included) to 11 (included)
-            X = self.data[:, 0:self.diff_cols].copy()
-            y = self.data[:, col].copy()
+        X_copy = self.data_frame[self.modeling_cols].copy()
+        y_copy = self.data_frame[self.perf_metric_cols].copy()
+        X_log = np.log(X_copy + 1)
+        y_log = np.log(y_copy + 1)
+        for col in self.perf_metric_cols:
             clone_model = clone(self.model)
             # removing outliers for performance metrics
-            X_thr = X[(np.abs(y) < self.threshold)]
-            y_thr = y[(np.abs(y) < self.threshold)]
+            X_thr = X_log[(np.abs(y_log[col]) < self.threshold)]
+            y_thr = y_log[(np.abs(y_log[col]) < self.threshold)]
             scores = cross_val_score(clone_model, X_thr, y_thr, cv=10, n_jobs=-1,
                                      scoring='neg_root_mean_squared_error')
             r2_scores = cross_val_score(clone_model, X_thr, y_thr, cv=10,
@@ -104,7 +104,7 @@ model_list = {'Support Vector Regressor': SVR(kernel='linear', C=0.5),
 with open(work_dir / 'stats_output.txt', 'w') as f:
     t1 = time()
     for name, model in model_list.items():
-        data_metrics = DataModeling(fb_na_tr, model, data_prep.output_columns)
+        data_metrics = DataModeling(fb_mod_df, model)
         f.writelines(f'Results for {name}: \n{(data_metrics.perf_table())}\n\n')
     f.writelines('\n')
     print(f'Total time elapsed: {round(time() - t1, 2)} s.')

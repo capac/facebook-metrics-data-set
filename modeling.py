@@ -37,7 +37,7 @@ renamed_perf_metric_cols = {'Lifetime Post Total Reach': 'LT Post Total Reach',
 
 data_prep = DataPreparation(data_file)
 # the NumPy array has categorical and numerical (13) columns
-fb_na_tr = data_prep.transform(drop='first')
+fb_na_tr = data_prep.transform()
 fb_mod_df = pd.DataFrame(fb_na_tr[0], columns=fb_na_tr[1])
 fb_mod_df.rename(columns=renamed_perf_metric_cols, inplace=True)
 

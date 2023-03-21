@@ -18,31 +18,34 @@ work_dir = home_dir / 'Programming/Python/machine-learning-exercises/uci-ml-repo
 data_file = work_dir / 'data/dataset_Facebook.csv'
 
 # data preparation
-modified_cols = {'Lifetime Post Total Reach': 'LT Post Total Reach',
-                 'Lifetime Post Total Impressions': 'LT Post Total Imp',
-                 'Lifetime Engaged Users': 'LT Engd Users',
-                 'Lifetime Post Consumers': 'LT Post Consumers',
-                 'Lifetime Post Consumptions': 'LT Post Consump',
-                 'Lifetime Post Impressions by people who have liked your Page': 'LT Post Imp + Liked Page',
-                 'Lifetime Post reach by people who like your Page': 'LT Post Reach + Liked Page',
-                 'Lifetime People who have liked your Page and engaged with your post': 'LT People + Engd Post',
-                 'comment': 'Comment',
-                 'like': 'Like',
-                 'share': 'Share',
-                 'Total Interactions': 'Total Int'
-                 }
+renamed_perf_metric_cols = {'Lifetime Post Total Reach': 'LT Post Total Reach',
+                            'Lifetime Post Total Impressions': 'LT Post Total Imp',
+                            'Lifetime Engaged Users': 'LT Engd Users',
+                            'Lifetime Post Consumers': 'LT Post Consumers',
+                            'Lifetime Post Consumptions': 'LT Post Consump',
+                            'Lifetime Post Impressions by people who have liked your Page':
+                            'LT Post Imp + Liked Page',
+                            'Lifetime Post reach by people who like your Page':
+                            'LT Post Reach + Liked Page',
+                            'Lifetime People who have liked your Page and engaged with your post':
+                            'LT People + Engd Post',
+                            'comment': 'Comment',
+                            'like': 'Like',
+                            'share': 'Share',
+                            'Total Interactions': 'Total Int'
+                            }
 
 data_prep = DataPreparation(data_file)
 # the NumPy array has categorical and numerical (13) columns
 fb_na_tr = data_prep.transform()
 fb_mod_df = pd.DataFrame(fb_na_tr[0], columns=fb_na_tr[1])
+fb_mod_df.rename(columns=renamed_perf_metric_cols, inplace=True)
 
 
 # data modeling
 class DataModeling():
     '''
-    With the OneHotEncoder class, the number of columns in the transformed matrix is 22.
-    The last 12 columns are the performance metrics which are used as labels for modeling.
+    last 12 columns are the performance metrics which are used as labels for modeling
     '''
     def __init__(self, data_frame, model, threshold=2.0):
         self.data_frame = data_frame
@@ -57,13 +60,13 @@ class DataModeling():
         cross_val_scores = []
         X_copy = self.data_frame[self.modeling_cols].copy()
         y_copy = self.data_frame[self.perf_metric_cols].copy()
-        X_log = np.log(X_copy + 1)
+        X_copy[X_copy.columns.tolist()[-1]] = np.log(X_copy[X_copy.columns.tolist()[-1]] + 1)
         y_log = np.log(y_copy + 1)
         for col in self.perf_metric_cols:
             clone_model = clone(self.model)
             # removing outliers for performance metrics
-            X_thr = X_log[(np.abs(y_log[col]) < self.threshold)]
-            y_thr = y_log[(np.abs(y_log[col]) < self.threshold)]
+            X_thr = X_copy[(np.abs(y_log[col]) < self.threshold)]
+            y_thr = y_log[col][(np.abs(y_log[col]) < self.threshold)]
             scores = cross_val_score(clone_model, X_thr, y_thr, cv=10, n_jobs=-1,
                                      scoring='neg_root_mean_squared_error')
             r2_scores = cross_val_score(clone_model, X_thr, y_thr, cv=10,

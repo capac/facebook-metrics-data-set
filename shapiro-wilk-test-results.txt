@@ -1,25 +1,37 @@
-Result for 'Lifetime Post Total Reach': 
-ShapiroResult(statistic=0.9449859857559204, pvalue=1.1524113911406952e-12)
+Result for 'Lifetime post total reach': 
+ShapiroResult(statistic=0.8170149326324463, pvalue=2.0066862269003897e-23)
 
-Result for 'Lifetime Post Total Impressions': 
-ShapiroResult(statistic=0.9119329452514648, pvalue=1.885314287295597e-16)
+Result for 'Lifetime post total impressions': 
+ShapiroResult(statistic=0.6609476208686829, pvalue=2.4487631244013387e-30)
 
-Result for 'Lifetime Engaged Users': 
-ShapiroResult(statistic=0.9113819599151611, pvalue=1.6654053435981693e-16)
+Result for 'Lifetime engaged users': 
+ShapiroResult(statistic=0.9907832741737366, pvalue=0.0032636201940476894)
 
-Result for 'Lifetime Post Consumers': 
-ShapiroResult(statistic=0.5508420467376709, pvalue=8.359382057433806e-34)
+Result for 'Lifetime post consumers': 
+ShapiroResult(statistic=0.992276132106781, pvalue=0.010858351364731789)
 
-Result for 'Lifetime Post Consumptions': 
-ShapiroResult(statistic=0.3202056288719177, pvalue=2.8446709150409868e-39)
+Result for 'Lifetime post consumptions': 
+ShapiroResult(statistic=0.919344425201416, pvalue=1.0576939587638259e-15)
 
-Result for 'Lifetime Post Impressions by people who have liked your Page': 
-ShapiroResult(statistic=0.634164035320282, pvalue=2.9587660656948604e-31)
+Result for 'Lifetime post impressions by people who have liked your page': 
+ShapiroResult(statistic=0.603523850440979, pvalue=3.051223339589719e-32)
 
-Result for 'Lifetime Post reach by people who like your Page': 
-ShapiroResult(statistic=0.6197054386138916, pvalue=9.94599405965207e-32)
+Result for 'Lifetime post reach by people who like your page': 
+ShapiroResult(statistic=0.9483771920204163, pvalue=3.4014846061330983e-12)
 
-Result for 'Lifetime People who have liked your Page and engaged with your post': 
-ShapiroResult(statistic=0.5304378271102905, pvalue=2.272355017236776e-34)
+Result for 'Lifetime people who have liked your page and engaged with your post': 
+ShapiroResult(statistic=0.9570869207382202, pvalue=6.924977258293552e-11)
+
+Result for 'Comment': 
+ShapiroResult(statistic=0.7308554649353027, pvalue=1.2251110006439421e-27)
+
+Result for 'Like': 
+ShapiroResult(statistic=0.8662779927253723, pvalue=2.854312073175812e-20)
+
+Result for 'Share': 
+ShapiroResult(statistic=0.9554091691970825, pvalue=3.764399209016389e-11)
+
+Result for 'Total interactions': 
+ShapiroResult(statistic=0.878486692905426, pvalue=2.3405514871888337e-19)
 
 

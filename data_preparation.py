@@ -34,7 +34,7 @@ class DataPreparation():
         # categorical columns: type, category, post month, post weekday, post hour, paid (6)
         self.cat_cols = self.input_columns[1:]
 
-    def transform(self, drop='first'):
+    def transform(self, drop=None):
         # standardization of data
         num_pipeline = make_pipeline(StandardScaler())
         cat_pipeline = make_pipeline(OneHotEncoder(sparse_output=False, drop=drop))

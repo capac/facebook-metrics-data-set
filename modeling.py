@@ -75,10 +75,10 @@ class DataModeling():
             rmse_mean = -scores.mean()
             rmse_std = scores.std()
             err_perc = 100*rmse_std/rmse_mean
-            cross_val_scores.append({'rmse': round(rmse_mean, 6),
-                                     'std': round(rmse_std, 6),
-                                     'perc': round(err_perc, 6),
-                                     'r2': round(r2_mean, 6)})
+            cross_val_scores.append({'rmse': round(rmse_mean, 3),
+                                     'std': round(rmse_std, 3),
+                                     'perc': round(err_perc, 3),
+                                     'r2': round(r2_mean, 3)})
         return cross_val_scores
 
     def perf_table(self):
